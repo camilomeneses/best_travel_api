@@ -2,10 +2,7 @@ package dev.camilo.demo.domain.entities;
 
 import dev.camilo.demo.util.Aeroline;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -35,7 +32,10 @@ public class Fly {
 
   /*un vuelo puede estar en varios tickets*/
 
-  /*mapeo inverso fly_id - Ticket (check)*/
+  /*mapeo inverso fly_id - Ticket*///check
+  //Excluir ToString y Equals infinito
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   @OneToMany(
       mappedBy = "fly",
       cascade = CascadeType.ALL,

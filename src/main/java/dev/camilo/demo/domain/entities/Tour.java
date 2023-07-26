@@ -1,10 +1,7 @@
 package dev.camilo.demo.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
@@ -19,6 +16,9 @@ public class Tour {
   private Long id;
 
   /*mapeo inverso*///check
+  //Excluir ToString y Equals infinito
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   @OneToMany(
       mappedBy = "tour",
       cascade = CascadeType.ALL,
@@ -28,6 +28,9 @@ public class Tour {
   private Set<Reservation> reservations;
 
   /*mapeo inverso - Ticket*///check
+  //Excluir ToString y Equals infinito
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   @OneToMany(
       mappedBy = "tour",
       cascade = CascadeType.ALL,

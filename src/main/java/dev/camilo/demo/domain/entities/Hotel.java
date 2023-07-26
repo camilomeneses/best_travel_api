@@ -1,10 +1,7 @@
 package dev.camilo.demo.domain.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -27,6 +24,9 @@ public class Hotel {
   private BigDecimal price;
 
   /*mapeo inverso hotel_id - Reservation*///check
+  //Excluir ToString y Equals infinito
+  @ToString.Exclude
+  @EqualsAndHashCode.Exclude
   @OneToMany(
       cascade = CascadeType.ALL,
       orphanRemoval = true,
