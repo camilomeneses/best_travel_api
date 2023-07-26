@@ -3,6 +3,8 @@ package dev.camilo.demo.domain.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -48,6 +50,9 @@ public class Tour {
   /*relacion inversa de los tickets*/
   //add, update and remove tickets
   public void addTicket(Ticket ticket){
+    if(Objects.isNull(this.tickets)){
+      this.tickets = new HashSet<>();
+    }
     this.tickets.add(ticket);
   }
 
@@ -57,20 +62,30 @@ public class Tour {
   }
 
   public void removeTicket(UUID id){
+    if(Objects.isNull(this.tickets)){
+      this.tickets = new HashSet<>();
+    }
     this.tickets.removeIf(ticket -> ticket.getId().equals(id));
   }
 
     /*relacion inversa de las reservaciones*/
     //add, update and remove reservations
     public void addReservation(Reservation reservation){
-        this.reservations.add(reservation);
+      if(Objects.isNull(this.reservations)){
+        this.reservations = new HashSet<>();
+      }
+      this.reservations.add(reservation);
     }
 
     public void updateReservation(){
+
       this.reservations.forEach(reservation -> reservation.setTour(this));
     }
 
     public  void removeReservation(UUID id){
+      if(Objects.isNull(this.reservations)){
+        this.reservations = new HashSet<>();
+      }
       this.reservations.removeIf(reservation -> reservation.getId().equals(id));
     }
 }
