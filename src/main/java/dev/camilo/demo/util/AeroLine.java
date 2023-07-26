@@ -1,6 +1,6 @@
 package dev.camilo.demo.util;
 
-public enum Aeroline {
+public enum AeroLine {
   AVIANCA,
   EASYFLY
 }

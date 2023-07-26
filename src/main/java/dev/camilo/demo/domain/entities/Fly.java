@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.entities;
 
-import dev.camilo.demo.util.Aeroline;
+import dev.camilo.demo.util.AeroLine;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +28,7 @@ public class Fly {
   private BigDecimal price;
   @Column(length = 20)
   @Enumerated(EnumType.STRING)
-  private Aeroline aeroLine;
+  private AeroLine aeroLine;
 
   /*un vuelo puede estar en varios tickets*/
 
