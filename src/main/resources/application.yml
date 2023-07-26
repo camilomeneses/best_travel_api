@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/best_travel
+    username: camilo
+    password: password123
+    # pool de conexiones
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+
+# Configuración para Hibernate y niveles de log
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type:
+        descriptor:
+          sql:
+            BasicBinder: TRACE
