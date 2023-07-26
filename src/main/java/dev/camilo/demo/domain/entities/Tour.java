@@ -77,7 +77,7 @@ public class Tour {
       this.reservations.add(reservation);
     }
 
-    public void updateReservation(){
+    public void updateReservations(){
 
       this.reservations.forEach(reservation -> reservation.setTour(this));
     }
