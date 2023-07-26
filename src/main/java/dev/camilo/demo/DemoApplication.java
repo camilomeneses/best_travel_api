@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -28,7 +29,7 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		var fly = flyRepository.findById(14L).get();
+	/*	var fly = flyRepository.findById(14L).get();
 		var hotel = hotelRepository.findById(7L).get();
 		var ticket = ticketRepository
 				.findById(UUID.fromString("32345678-1234-5678-4234-567812345678")).get();
@@ -41,6 +42,13 @@ public class DemoApplication implements CommandLineRunner {
 
 		log.info(String.valueOf(ticket));
 		log.info(String.valueOf(reservation));
-		log.info(String.valueOf(customer));
+		log.info(String.valueOf(customer));*/
+
+		/*this.flyRepository.selectLessPrice(BigDecimal.valueOf(20)).forEach(System.out::println);*/
+		/*this.flyRepository.selectBetweenPrice(BigDecimal.valueOf(10),BigDecimal.valueOf(15)).forEach(System.out::println);*/
+		/*this.flyRepository.selectOriginDestiny("Grecia","Mexico").forEach(System.out::println);*/
+
+		var fly = flyRepository.findByTicketId(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
+		System.out.println(fly);
 	}
 }

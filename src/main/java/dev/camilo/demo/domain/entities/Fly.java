@@ -36,11 +36,6 @@ public class Fly {
   //Excluir ToString y Equals infinito
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
-  @OneToMany(
-      mappedBy = "fly",
-      cascade = CascadeType.ALL,
-      fetch = FetchType.EAGER,
-      orphanRemoval = true
-  )
+  @OneToMany(mappedBy = "fly", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
   private Set<Ticket> tickets;
 }
