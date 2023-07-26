@@ -56,5 +56,9 @@ public class DemoApplication implements CommandLineRunner {
 		/*hotelRepository.findByPriceBetween(BigDecimal.valueOf(100),BigDecimal.valueOf(200))
 				.forEach(System.out::println);*/
 		/*hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);*/
+
+		//JPQL join method names
+		var hotel = hotelRepository.findByReservationsId(UUID.fromString("12345678-1234-5678-1234-567812345678")).get();
+		System.out.println(hotel);
 	}
 }
