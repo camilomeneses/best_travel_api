@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Entity(name = "tour")
 @NoArgsConstructor
@@ -43,4 +44,33 @@ public class Tour {
   @ManyToOne
   @JoinColumn(name = "id_customer")
   private Customer customer;
+
+  /*relacion inversa de los tickets*/
+  //add, update and remove tickets
+  public void addTicket(Ticket ticket){
+    this.tickets.add(ticket);
+  }
+
+  /*seteo del tour actual a los ticket*/
+  public void updateTickets(){
+    this.tickets.forEach(ticket -> ticket.setTour(this));
+  }
+
+  public void removeTicket(UUID id){
+    this.tickets.removeIf(ticket -> ticket.getId().equals(id));
+  }
+
+    /*relacion inversa de las reservaciones*/
+    //add, update and remove reservations
+    public void addReservation(Reservation reservation){
+        this.reservations.add(reservation);
+    }
+
+    public void updateReservation(){
+      this.reservations.forEach(reservation -> reservation.setTour(this));
+    }
+
+    public  void removeReservation(UUID id){
+      this.reservations.removeIf(reservation -> reservation.getId().equals(id));
+    }
 }
