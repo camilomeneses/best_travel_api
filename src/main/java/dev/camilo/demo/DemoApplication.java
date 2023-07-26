@@ -48,7 +48,13 @@ public class DemoApplication implements CommandLineRunner {
 		/*this.flyRepository.selectBetweenPrice(BigDecimal.valueOf(10),BigDecimal.valueOf(15)).forEach(System.out::println);*/
 		/*this.flyRepository.selectOriginDestiny("Grecia","Mexico").forEach(System.out::println);*/
 
-		var fly = flyRepository.findByTicketId(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
-		System.out.println(fly);
+		/*var fly = flyRepository.findByTicketId(UUID.fromString("12345678-1234-5678-2236-567812345678")).get();
+		System.out.println(fly);*/
+
+		//JPQL method names
+		/*hotelRepository.findByPriceLessThan(BigDecimal.valueOf(100)).forEach(System.out::println);*/
+		/*hotelRepository.findByPriceBetween(BigDecimal.valueOf(100),BigDecimal.valueOf(200))
+				.forEach(System.out::println);*/
+		/*hotelRepository.findByRatingGreaterThan(3).forEach(System.out::println);*/
 	}
 }

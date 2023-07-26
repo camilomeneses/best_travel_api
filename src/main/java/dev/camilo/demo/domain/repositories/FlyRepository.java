@@ -22,7 +22,6 @@ public interface FlyRepository extends JpaRepository<Fly, Long> {
   Set<Fly> selectOriginDestiny(String origin, String destiny);
 
   /*JOIN JPQL*/
-
   @Query("select f from fly f left join fetch f.tickets t where t.id = :id")
   Optional<Fly> findByTicketId(UUID id);
 }
