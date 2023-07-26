@@ -25,6 +25,7 @@ public class Customer {
   private Integer totalTours;
 
   /*mapeo inverso customer_id - Tour*///check
+  /*FetchType.LAZY arregla problema de Delete*/
   //Excluir ToString y Equals infinito
   @ToString.Exclude
   @EqualsAndHashCode.Exclude
@@ -32,7 +33,7 @@ public class Customer {
       cascade = CascadeType.ALL,
       orphanRemoval = true,
       mappedBy = "customer",
-      fetch = FetchType.EAGER
+      fetch = FetchType.LAZY
   )
   private Set<Tour> tours;
 
