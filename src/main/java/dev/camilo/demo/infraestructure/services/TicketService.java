@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Transactional //gestion de transacciones
@@ -42,7 +41,7 @@ public class TicketService implements ITicketService {
         .fly(fly)
         .customer(customer)
         /*aumentar el valor del precio un 25%*/
-        .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
+        .price(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
         .purchaseDate(LocalDate.now())
         .departureDate(BestTravelUtil.getRandomSoon())
         .arrivalDate(BestTravelUtil.getRandomLatter())
@@ -70,7 +69,7 @@ public class TicketService implements ITicketService {
     /*seteo de fly en en ticket*/
     ticketToUpdate.setFly(fly);
     /*aumentar el valor del precio un 25%*/
-    ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
+    ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
     ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
     ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLatter());
 
@@ -89,7 +88,7 @@ public class TicketService implements ITicketService {
   @Override
   public BigDecimal findPrice(Long flyId) {
     var fly = this.flyRepository.findById(flyId).orElseThrow();
-    return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage));
+    return fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
   }
 
   //mapeo de Entity a DTOResponse
@@ -102,5 +101,5 @@ public class TicketService implements ITicketService {
     return response;
   }
 
-  private static final BigDecimal charger_price_percentage = BigDecimal.valueOf(0.25);
+  private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 }
