@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
@@ -13,6 +14,6 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @JacksonXmlRootElement
-public class FlyPriceResponse {
+public class FlyPriceResponse implements Serializable {
   private BigDecimal flyPrice;
 }
