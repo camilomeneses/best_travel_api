@@ -40,6 +40,7 @@ public class TicketService implements ITicketService {
         .id(UUID.randomUUID())
         .fly(fly)
         .customer(customer)
+        /*aumentar el valor del precio un 25%*/
         .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
         .purchaseDate(LocalDate.now())
         .arrivalDate(LocalDateTime.now())
@@ -53,13 +54,28 @@ public class TicketService implements ITicketService {
 
   @Override
   public TicketResponse read(UUID id) {
+    /*variables de entrada del request*/
     var ticketFromDB = this.ticketRepository.findById(id).orElseThrow();
     return this.entityToResponse(ticketFromDB);
   }
 
   @Override
   public TicketResponse update(TicketRequest request, UUID id) {
-    return null;
+    /*variables de entrada del request*/
+    var ticketToUpdate = ticketRepository.findById(id).orElseThrow();
+    var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+
+    //actualizacion de valores en el ticket
+    /*seteo de fly en en ticket*/
+    ticketToUpdate.setFly(fly);
+    /*aumentar el valor del precio un 25%*/
+    ticketToUpdate.setPrice(BigDecimal.valueOf(0.25));
+    ticketToUpdate.setDepartureDate(LocalDateTime.now());
+    ticketToUpdate.setArrivalDate(LocalDateTime.now());
+
+    var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
+    log.info("Ticket updated with id {}", ticketUpdated.getId());
+    return this.entityToResponse(ticketUpdated);
   }
 
   @Override

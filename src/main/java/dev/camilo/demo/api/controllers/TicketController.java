@@ -45,5 +45,21 @@ public class TicketController {
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(ticketService.read(id));
   }
 
-
+  /*actualizar ticket JSON y XML*/
+  @PutMapping(path = "{id}")
+  public ResponseEntity<TicketResponse> put(
+      @RequestHeader("Content-Type") String contentType,
+      @PathVariable UUID id,
+      @RequestBody TicketRequest request) {
+    if (MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
+      return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_JSON)
+          .body(ticketService.update(request, id));
+    } else if (MediaType.APPLICATION_XML_VALUE.equals(contentType)) {
+      return ResponseEntity.ok()
+          .contentType(MediaType.APPLICATION_XML)
+          .body(ticketService.update(request, id));
+    }
+    return ResponseEntity.badRequest().build();
+  }
 }
