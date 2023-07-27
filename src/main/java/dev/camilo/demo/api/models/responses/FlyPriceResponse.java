@@ -8,6 +8,9 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+/**
+ * DTO Response para TicketController
+ */
 @Getter
 @Setter
 @AllArgsConstructor

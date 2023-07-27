@@ -12,14 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+/**
+ * Controller REST para respuestas JSON y XML para reservation
+ */
 @RestController
 @RequestMapping(path = "reservation")
 @RequiredArgsConstructor
 public class ReservationController {
 
+  //services inyectados
   private final IReservationService reservationService;
 
   //crear una reservation JSON y XML
+  /**
+   * Accion POST para crear una nueva reservation
+   * @param contentType Header
+   * @param request ReservationRequest
+   * @return ResponseEntity<ReservationResponse>
+   */
   @PostMapping
   public ResponseEntity<ReservationResponse> post(
       @RequestHeader("Content-Type") String contentType,
@@ -35,6 +45,12 @@ public class ReservationController {
   }
 
   //leer una reservation JSON
+  /**
+   * Accion GET para obtener una reservation en
+   * formato JSON
+   * @param id UUID
+   * @return ResponseEntity<ReservationResponse>
+   */
   @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<ReservationResponse> getJson(@PathVariable UUID id){
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON)
@@ -42,6 +58,11 @@ public class ReservationController {
   }
 
   //leer una reservation XML
+  /**
+   * Accion GET para obtener una reservation en formato XML
+   * @param id UUID
+   * @return ResponseEntity<ReservationResponse>
+   */
   @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<ReservationResponse> getXml(@PathVariable UUID id){
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML)
@@ -49,6 +70,13 @@ public class ReservationController {
   }
 
   //actualizar reservation JSON y XML
+  /**
+   * Accion PUT para actualizar una reservation
+   * @param contentType Header
+   * @param id UUID
+   * @param request ReservationRequest
+   * @return ResponseEntity
+   */
   @PutMapping(path = "{id}")
   public ResponseEntity<ReservationResponse> put(
       @RequestHeader("Content-Type") String contentType,
@@ -68,6 +96,11 @@ public class ReservationController {
   }
 
   //eliminar reservation JSON y XML
+  /**
+   * Accion DELETE para eliminar una reservation
+   * @param id UUID
+   * @return ResponseEntity
+   */
   @DeleteMapping(path = "{id}")
   public ResponseEntity<Void> delete(@PathVariable UUID id){
     this.reservationService.delete(id);
@@ -75,6 +108,12 @@ public class ReservationController {
   }
 
   //obtener precio de hotel para reservation JSON
+  /**
+   * Accion GET para obtener el precio de una reservation segun
+   * el precio del hotel a reservar, respuesta en formato JSON
+   * @param hotelId Long
+   * @return ResponseEntity
+   */
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<HotelPriceResponse> getHotelPriceJson(
       @RequestParam Long hotelId
@@ -83,6 +122,12 @@ public class ReservationController {
   }
 
   //obtener precio de hotel para reservation XML
+  /**
+   * Accion GET para obtener el precio de una reservation segun
+   * el precio del hotel a reservar, respuesta en formato XML
+   * @param hotelId Long
+   * @return ResponseEntity
+   */
   @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<HotelPriceResponse> getHotelPriceXml(
       @RequestParam Long hotelId
@@ -91,6 +136,12 @@ public class ReservationController {
   }
 
 
+  //private methods
+  /**
+   * Metodo para traer el precio del hotel de la reservation realizada
+   * @param hotelId Long
+   * @return ResponseEntity
+   */
   private ResponseEntity<HotelPriceResponse> getHotelPrice(Long hotelId) {
     BigDecimal hotelPrice = reservationService.findPrice(hotelId);
 

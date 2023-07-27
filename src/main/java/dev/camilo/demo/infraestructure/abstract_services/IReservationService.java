@@ -6,7 +6,15 @@ import dev.camilo.demo.api.models.responses.ReservationResponse;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+/**
+ * Interfaz concreta
+ */
 public interface IReservationService extends CrudService<ReservationRequest, ReservationResponse, UUID>{
 
+  /**
+   * obtener precio de un hotel
+   * @param hotelId Long
+   * @return BigDecimal
+   */
   BigDecimal findPrice(Long hotelId);
 }

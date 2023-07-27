@@ -12,14 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+/**
+ * Controller REST para respuestas JSON y XML para ticket
+ */
 @RestController
 @RequestMapping(path = "ticket")
 @RequiredArgsConstructor
 public class TicketController {
 
+  //services inyectados
   private final ITicketService ticketService;
 
   //crear un ticket JSON y XML
+  /**
+   * Accion POST para crear una nuevo ticket
+   * @param contentType Header
+   * @param request TicketRequest
+   * @return ResponseEntity
+   */
   @PostMapping
   public ResponseEntity<TicketResponse> post(
       @RequestHeader("Content-Type") String contentType,
@@ -36,18 +46,35 @@ public class TicketController {
   }
 
   //leer un ticket JSON
+  /**
+   * Accion GET para obtener ticket en formato JSON
+   * @param id UUID
+   * @return ResponseEntity
+   */
   @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TicketResponse> getJson(@PathVariable UUID id) {
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(ticketService.read(id));
   }
 
   //leer un ticket XML
+  /**
+   * Accion GET para obtener ticket en formato XML
+   * @param id UUID
+   * @return ResponseEntity
+   */
   @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<TicketResponse> getXml(@PathVariable UUID id) {
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(ticketService.read(id));
   }
 
   //actualizar ticket JSON y XML
+  /**
+   * Accion PUT para actualizar un ticket
+   * @param contentType Header
+   * @param id UUID
+   * @param request TicketRequest
+   * @return ResponseEntity
+   */
   @PutMapping(path = "{id}")
   public ResponseEntity<TicketResponse> put(
       @RequestHeader("Content-Type") String contentType,
@@ -66,6 +93,11 @@ public class TicketController {
   }
 
   //eliminar ticket JSON y XML
+  /**
+   * Accion DELETE para eliminar un ticket
+   * @param id UUID
+   * @return ResponseEntity
+   */
   @DeleteMapping(path = "{id}")
   public ResponseEntity<Void> delete(@PathVariable UUID id) {
     this.ticketService.delete(id);
@@ -73,6 +105,12 @@ public class TicketController {
   }
 
   //obtener precio de vuelo para ticket JSON
+  /**
+   * Accion GET para obtener el precio de un ticket segun
+   * el precio del vuelo a tomar, respuesta en JSON
+   * @param flyId Long
+   * @return ResponseEntity
+   */
   @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<FlyPriceResponse> getFlyPriceJson(
       @RequestParam Long flyId
@@ -81,6 +119,12 @@ public class TicketController {
   }
 
   //obtener precio de vuelo para ticket XML
+  /**
+   * Accion GET para obtener el precio de un ticket segun
+   * el precio del vuelo a tomar, respuesta en XML
+   * @param flyId Long
+   * @return ResponseEntity
+   */
   @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<FlyPriceResponse> getFlyPriceXml(
       @RequestParam Long flyId
@@ -88,6 +132,12 @@ public class TicketController {
     return getFlyPrice(flyId);
   }
 
+  //private methods
+  /**
+   * Metodo para traer el precio del vuelo del ticket realizado
+   * @param flyId Long
+   * @return ResponseEntity
+   */
   private ResponseEntity<FlyPriceResponse> getFlyPrice(Long flyId) {
     BigDecimal flyPrice = ticketService.findPrice(flyId);
 

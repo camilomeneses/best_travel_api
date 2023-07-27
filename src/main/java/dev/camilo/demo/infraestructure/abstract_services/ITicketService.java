@@ -5,9 +5,16 @@ import dev.camilo.demo.api.models.responses.TicketResponse;
 
 import java.math.BigDecimal;
 import java.util.UUID;
-/*interfaz concreta*/
+
+/**
+ * Interfaz concreta
+ */
 public interface ITicketService extends CrudService<TicketRequest, TicketResponse, UUID>{
 
-  /*obtener el precio de un vuelo*/
+  /**
+   * obtener el precio de un vuelo
+   * @param flyId Long
+   * @return BigDecimal
+   */
   BigDecimal findPrice(Long flyId);
 }

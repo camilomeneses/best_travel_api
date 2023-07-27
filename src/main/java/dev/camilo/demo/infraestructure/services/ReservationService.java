@@ -19,16 +19,26 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Service para ReservationController
+ */
 @Transactional //gestion de transacciones
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ReservationService implements IReservationService {
 
+  //repositorios inyectados
   private final ReservationRepository reservationRepository;
   private final CustomerRepository customerRepository;
   private final HotelRepository hotelRepository;
 
+  //crear nueva reservation
+  /**
+   * Metodo para crear una nueva reservation
+   * @param request ReservationRequest
+   * @return ReservationResponse
+   */
   @Override
   public ReservationResponse create(ReservationRequest request) {
     /*variables de entrada del request*/
@@ -52,6 +62,13 @@ public class ReservationService implements IReservationService {
     return this.entityToResponse(reservationPersisted);
   }
 
+  //obtener una reservation
+
+  /**
+   * Metodo para obtener una reservation
+   * @param id UUID
+   * @return ReservationResponse
+   */
   @Override
   public ReservationResponse read(UUID id) {
     /*variables de entrada del request*/
@@ -59,12 +76,19 @@ public class ReservationService implements IReservationService {
     return this.entityToResponse(reservationFromDB);
   }
 
+  //actualizar reservation
+  /**
+   * Metodo para actualizar una reservation
+   * @param request ReservationRequest
+   * @param id UUID
+   * @return ReservationResponse
+   */
   @Override
   public ReservationResponse update(ReservationRequest request, UUID id) {
     /*variables de entrada del request*/
     var hotel = hotelRepository.findById(request.getIdHotel()).orElseThrow();
 
-    //actualizacion de valores en reservation
+    /*actualizacion de valores en reservation*/
     var reservationToUpdate = reservationRepository.findById(id).orElseThrow();
 
     /*seteo de hotel en reservation*/
@@ -80,6 +104,11 @@ public class ReservationService implements IReservationService {
     return this.entityToResponse(reservationUpdated);
   }
 
+  //eliminar una reservation
+  /**
+   * Metodo para eliminar una reservation
+   * @param id UUID
+   */
   @Override
   public void delete(UUID id) {
     /*variables de entrada del request*/
@@ -87,6 +116,13 @@ public class ReservationService implements IReservationService {
     this.reservationRepository.delete(reservationToDelete);
   }
 
+  //cotizar precio de reservacion
+  /**
+   * Metodo para devolver el precio de la reservation, tiene
+   * agregado un 20% del valor base del hotel
+   * @param hotelId Long
+   * @return BigDecimal
+   */
   @Override
   public BigDecimal findPrice(Long hotelId) {
     var hotel = hotelRepository.findById(hotelId).orElseThrow();
@@ -94,6 +130,11 @@ public class ReservationService implements IReservationService {
   }
 
   //mapeo de Entity a DTOResponse
+  /**
+   * Metodo para mapear y convertir una entidad en el DTO response
+   * @param entity Reservation
+   * @return ReservationResponse
+   */
   private ReservationResponse entityToResponse(Reservation entity) {
     var response = new ReservationResponse();
     BeanUtils.copyProperties(entity, response);
@@ -103,6 +144,10 @@ public class ReservationService implements IReservationService {
     return response;
   }
 
+  // constantes
+  /**
+   * Adicional por reservation
+   */
   private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.20);
 
 }

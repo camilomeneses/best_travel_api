@@ -19,16 +19,26 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
+/**
+ * Service para TicketController
+ */
 @Transactional //gestion de transacciones
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class TicketService implements ITicketService {
 
+  //repositorios inyectados
   private final FlyRepository flyRepository;
   private final CustomerRepository customerRepository;
   private final TicketRepository ticketRepository;
 
+  //crear nuevo ticket
+  /**
+   * Metodo para crear un nuevo ticket
+   * @param request TicketRequest
+   * @return TicketResponse
+   */
   @Override
   public TicketResponse create(TicketRequest request) {
     /*variables de entrada del request*/
@@ -52,6 +62,12 @@ public class TicketService implements ITicketService {
     return this.entityToResponse(ticketPersisted);
   }
 
+  //obtener un ticket
+  /**
+   * Metodo para obtener un ticket
+   * @param id UUID
+   * @return TicketResponse
+   */
   @Override
   public TicketResponse read(UUID id) {
     /*variables de entrada del request*/
@@ -59,13 +75,20 @@ public class TicketService implements ITicketService {
     return this.entityToResponse(ticketFromDB);
   }
 
+  //actualizar ticket
+  /**
+   * Metodo para actualiza un ticket
+   * @param request TicketRequest
+   * @param id UUID
+   * @return TicketResponse
+   */
   @Override
   public TicketResponse update(TicketRequest request, UUID id) {
     /*variables de entrada del request*/
     var ticketToUpdate = ticketRepository.findById(id).orElseThrow();
     var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
 
-    //actualizacion de valores en el ticket
+    /*actualizacion de valores en el ticket*/
     /*seteo de fly en en ticket*/
     ticketToUpdate.setFly(fly);
     /*aumentar el valor del precio un 25%*/
@@ -78,6 +101,11 @@ public class TicketService implements ITicketService {
     return this.entityToResponse(ticketUpdated);
   }
 
+  //eliminar un ticket
+  /**
+   * Metodo para eliminar un ticket
+   * @param id UUID
+   */
   @Override
   public void delete(UUID id) {
     /*variables de entrada del request*/
@@ -85,6 +113,13 @@ public class TicketService implements ITicketService {
     this.ticketRepository.delete(ticketToDelete);
   }
 
+  //cotizar precio de vuelo
+  /**
+   * Metodo para devolver el precio del vuelo, tiene
+   * agregado un 25% del valor base del vuelo
+   * @param flyId Long
+   * @return BigDecimal
+   */
   @Override
   public BigDecimal findPrice(Long flyId) {
     var fly = this.flyRepository.findById(flyId).orElseThrow();
@@ -92,6 +127,12 @@ public class TicketService implements ITicketService {
   }
 
   //mapeo de Entity a DTOResponse
+
+  /**
+   * Metodo para mapear y convertir una entidad en el DTO response
+   * @param entity Ticket
+   * @return TicketResponse
+   */
   private TicketResponse entityToResponse(Ticket entity){
     var response = new TicketResponse();
     BeanUtils.copyProperties(entity,response);
@@ -101,5 +142,9 @@ public class TicketService implements ITicketService {
     return response;
   }
 
+  //constantes
+  /**
+   * Adicional por vuelo
+   */
   private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 }

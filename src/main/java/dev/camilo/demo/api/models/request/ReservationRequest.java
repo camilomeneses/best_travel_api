@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * DTO Request para ReservationController
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

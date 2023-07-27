@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * DTO Response para TicketController
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
