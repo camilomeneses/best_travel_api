@@ -41,7 +41,7 @@ public class TicketService implements ITicketService {
         .fly(fly)
         .customer(customer)
         /*aumentar el valor del precio un 25%*/
-        .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+        .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
         .purchaseDate(LocalDate.now())
         .arrivalDate(LocalDateTime.now())
         .departureDate(LocalDateTime.now())
@@ -69,7 +69,7 @@ public class TicketService implements ITicketService {
     /*seteo de fly en en ticket*/
     ticketToUpdate.setFly(fly);
     /*aumentar el valor del precio un 25%*/
-    ticketToUpdate.setPrice(BigDecimal.valueOf(0.25));
+    ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
     ticketToUpdate.setDepartureDate(LocalDateTime.now());
     ticketToUpdate.setArrivalDate(LocalDateTime.now());
 
@@ -85,6 +85,12 @@ public class TicketService implements ITicketService {
     this.ticketRepository.delete(ticketToDelete);
   }
 
+  @Override
+  public BigDecimal findPrice(Long flyId) {
+    var fly = this.flyRepository.findById(flyId).orElseThrow();
+    return fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage));
+  }
+
   //mapeo de Entity a DTOResponse
   private TicketResponse entityToResponse(Ticket entity){
     var response = new TicketResponse();
@@ -94,4 +100,6 @@ public class TicketService implements ITicketService {
     response.setFly(flyResponse);
     return response;
   }
+
+  private static final BigDecimal charger_price_percentage = BigDecimal.valueOf(0.25);
 }

@@ -1,6 +1,7 @@
 package dev.camilo.demo.api.controllers;
 
 import dev.camilo.demo.api.models.request.TicketRequest;
+import dev.camilo.demo.api.models.responses.FlyPriceResponse;
 import dev.camilo.demo.api.models.responses.TicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @RestController
@@ -68,5 +70,31 @@ public class TicketController {
   public ResponseEntity<Void> delete(@PathVariable UUID id) {
     this.ticketService.delete(id);
     return ResponseEntity.noContent().build();
+  }
+
+  /*obtener precio de vuelo JSON*/
+  @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<FlyPriceResponse> getFlyPriceJson(
+      @RequestParam Long flyId
+  ) {
+    BigDecimal flyPrice = this.ticketService.findPrice(flyId);
+
+    // Crear una instancia de FlyPriceResponse con el precio del vuelo
+    FlyPriceResponse response = new FlyPriceResponse(flyPrice);
+    return ResponseEntity.ok(response);
+  }
+
+  /*obtener precio de vuelo XML*/
+  @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
+  public ResponseEntity<FlyPriceResponse> getFlyPriceXml(
+      @RequestParam Long flyId
+  ) {
+    BigDecimal flyPrice = this.ticketService.findPrice(flyId);
+
+    // Crear una clase FlyPriceResponse para representar la respuesta en XML
+    FlyPriceResponse response = new FlyPriceResponse();
+    response.setFlyPrice(flyPrice);
+
+    return ResponseEntity.ok(response);
   }
 }
