@@ -80,7 +80,9 @@ public class TicketService implements ITicketService {
 
   @Override
   public void delete(UUID id) {
-
+    /*variables de entrada del request*/
+    var ticketToDelete = ticketRepository.findById(id).orElseThrow();
+    this.ticketRepository.delete(ticketToDelete);
   }
 
   //mapeo de Entity a DTOResponse

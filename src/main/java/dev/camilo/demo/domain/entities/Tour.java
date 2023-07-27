@@ -43,7 +43,7 @@ public class Tour {
   private Set<Ticket> tickets;
 
   /*mapeo directo customer*///check
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "id_customer")
   private Customer customer;
 

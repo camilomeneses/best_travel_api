@@ -30,7 +30,7 @@ public class TicketController {
       return ResponseEntity.ok()
           .contentType(MediaType.APPLICATION_XML).body(ticketService.create(request));
     }
-    return ResponseEntity.badRequest().build();
+    return ResponseEntity.notFound().build();
   }
 
   /*leer un ticket JSON*/
@@ -60,6 +60,13 @@ public class TicketController {
           .contentType(MediaType.APPLICATION_XML)
           .body(ticketService.update(request, id));
     }
-    return ResponseEntity.badRequest().build();
+    return ResponseEntity.notFound().build();
+  }
+
+  /*eliminar ticket JSON y XML*/
+  @DeleteMapping(path = "{id}")
+  public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    this.ticketService.delete(id);
+    return ResponseEntity.noContent().build();
   }
 }

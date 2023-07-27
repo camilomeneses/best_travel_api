@@ -32,17 +32,17 @@ public class Reservation {
   private BigDecimal price;
 
   /*mapeo directo tour*///check
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tour_id", nullable = true)
   private Tour tour;
 
   /*mapeo directo hotel*///check
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "hotel_id")
   private Hotel hotel;
 
   /*mapeo directo customer*///check
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "customer_id")
   private Customer customer;
 }
