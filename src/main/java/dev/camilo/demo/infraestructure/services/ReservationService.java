@@ -54,17 +54,43 @@ public class ReservationService implements IReservationService {
 
   @Override
   public ReservationResponse read(UUID id) {
-    return null;
+    /*variables de entrada del request*/
+    var reservationFromDB = reservationRepository.findById(id).orElseThrow();
+    return this.entityToResponse(reservationFromDB);
   }
 
   @Override
   public ReservationResponse update(ReservationRequest request, UUID id) {
-    return null;
+    /*variables de entrada del request*/
+    var hotel = hotelRepository.findById(request.getIdHotel()).orElseThrow();
+
+    //actualizacion de valores en reservation
+    var reservationToUpdate = reservationRepository.findById(id).orElseThrow();
+
+    /*seteo de hotel en reservation*/
+    reservationToUpdate.setHotel(hotel);
+    reservationToUpdate.setTotalDays(request.getTotalDays());
+    reservationToUpdate.setDateTimeReservation(LocalDateTime.now());
+    reservationToUpdate.setDateStart(LocalDate.now());
+    reservationToUpdate.setDateEnd(LocalDate.now().plusDays(request.getTotalDays()));
+    reservationToUpdate.setPrice(hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
+
+    var reservationUpdated = reservationRepository.save(reservationToUpdate);
+    log.info("Reservation updated with id {}", reservationUpdated.getId());
+    return this.entityToResponse(reservationUpdated);
   }
 
   @Override
   public void delete(UUID id) {
+    /*variables de entrada del request*/
+    var reservationToDelete = reservationRepository.findById(id).orElseThrow();
+    this.reservationRepository.delete(reservationToDelete);
+  }
 
+  @Override
+  public BigDecimal findPrice(Long hotelId) {
+    var hotel = hotelRepository.findById(hotelId).orElseThrow();
+    return hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
   }
 
   //mapeo de Entity a DTOResponse
@@ -78,4 +104,5 @@ public class ReservationService implements IReservationService {
   }
 
   private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.20);
+
 }

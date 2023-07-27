@@ -12,6 +12,6 @@ import java.math.BigDecimal;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlyPriceResponse implements Serializable {
-  private BigDecimal flyPrice;
+public class HotelPriceResponse implements Serializable {
+  private BigDecimal hotelPrice;
 }
