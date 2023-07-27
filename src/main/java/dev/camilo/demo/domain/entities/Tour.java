@@ -25,7 +25,7 @@ public class Tour {
   @OneToMany(
       mappedBy = "tour",
       cascade = CascadeType.ALL,
-      fetch = FetchType.EAGER,
+      fetch = FetchType.LAZY,
       orphanRemoval = true
   )
   private Set<Reservation> reservations;
@@ -37,7 +37,7 @@ public class Tour {
   @OneToMany(
       mappedBy = "tour",
       cascade = CascadeType.ALL,
-      fetch = FetchType.EAGER,
+      fetch = FetchType.LAZY,
       orphanRemoval = true
   )
   private Set<Ticket> tickets;

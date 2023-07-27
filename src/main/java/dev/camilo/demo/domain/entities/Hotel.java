@@ -31,7 +31,7 @@ public class Hotel {
       cascade = CascadeType.ALL,
       orphanRemoval = true,
       mappedBy = "hotel",
-      fetch = FetchType.EAGER
+      fetch = FetchType.LAZY
   )
   private Set<Reservation> reservations;
 }

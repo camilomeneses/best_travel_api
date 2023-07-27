@@ -45,7 +45,7 @@ public class Customer {
       cascade = CascadeType.ALL,
       orphanRemoval = true,
       mappedBy = "customer",
-      fetch = FetchType.EAGER
+      fetch = FetchType.LAZY
   )
   private Set<Reservation> reservations;
 
@@ -57,7 +57,7 @@ public class Customer {
       cascade = CascadeType.ALL,
       orphanRemoval = true,
       mappedBy = "customer",
-      fetch = FetchType.EAGER
+      fetch = FetchType.LAZY
   )
   private Set<Ticket> tickets;
 }
