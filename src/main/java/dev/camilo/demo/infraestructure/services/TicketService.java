@@ -8,6 +8,7 @@ import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.TicketRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
+import dev.camilo.demo.util.BestTravelUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -43,8 +44,8 @@ public class TicketService implements ITicketService {
         /*aumentar el valor del precio un 25%*/
         .price(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)))
         .purchaseDate(LocalDate.now())
-        .arrivalDate(LocalDateTime.now())
-        .departureDate(LocalDateTime.now())
+        .departureDate(BestTravelUtil.getRandomSoon())
+        .arrivalDate(BestTravelUtil.getRandomLatter())
         .build();
 
     var ticketPersisted = this.ticketRepository.save(ticketToPersist);
@@ -70,8 +71,8 @@ public class TicketService implements ITicketService {
     ticketToUpdate.setFly(fly);
     /*aumentar el valor del precio un 25%*/
     ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(charger_price_percentage)));
-    ticketToUpdate.setDepartureDate(LocalDateTime.now());
-    ticketToUpdate.setArrivalDate(LocalDateTime.now());
+    ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
+    ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLatter());
 
     var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
     log.info("Ticket updated with id {}", ticketUpdated.getId());
