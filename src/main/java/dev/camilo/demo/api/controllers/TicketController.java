@@ -8,6 +8,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping(path = "ticket")
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ public class TicketController {
 
   private final ITicketService ticketService;
 
+  /*crear un ticket JSON y XML*/
   @PostMapping
   public ResponseEntity<TicketResponse> post(
       @RequestHeader("Content-Type") String contentType,
@@ -29,4 +32,18 @@ public class TicketController {
     }
     return ResponseEntity.badRequest().build();
   }
+
+  /*leer un ticket JSON*/
+  @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<TicketResponse> getJson(@PathVariable UUID id) {
+    return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(ticketService.read(id));
+  }
+
+  /*leer un ticket XML*/
+  @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
+  public ResponseEntity<TicketResponse> getXml(@PathVariable UUID id) {
+    return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(ticketService.read(id));
+  }
+
+
 }
