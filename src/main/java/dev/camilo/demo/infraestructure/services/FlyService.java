@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service para FlyController
@@ -50,19 +51,50 @@ public class FlyService implements IFlyService {
     return this.flyRepository.findAll(pageRequest).map(this::entityToResponse);
   }
 
+  //obtener vuelos de menor precio
+
+  /**
+   * Obtener los vuelos por debajo del precio
+   * @param price BigDecimal
+   * @return Set
+   */
   @Override
   public Set<FlyResponse> readLessPrice(BigDecimal price) {
-    return null;
+    return this.flyRepository.selectLessPrice(price)
+        .stream()
+        .map(this::entityToResponse)
+        .collect(Collectors.toSet());
   }
 
+  //obtener vuelos entre los precios
+  /**
+   * Obtener vuelos entre el precio min y max
+   * @param min BigDecimal
+   * @param max BigDecimal
+   * @return Set
+   */
   @Override
   public Set<FlyResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
-    return null;
+    return this.flyRepository.selectBetweenPrice(min,max)
+        .stream()
+        .map(this::entityToResponse)
+        .collect(Collectors.toSet());
   }
 
+  //obtener vuelos de origen y destino
+
+  /**
+   * Obtener los vuelos correspondientes a los origenes y destinos
+   * @param origen String
+   * @param destiny String
+   * @return Set
+   */
   @Override
   public Set<FlyResponse> readByOriginDestiny(String origen, String destiny) {
-    return null;
+    return this.flyRepository.selectOriginDestiny(origen,destiny)
+        .stream()
+        .map(this::entityToResponse)
+        .collect(Collectors.toSet());
   }
 
   //Mapeo de entity a DTO Response
