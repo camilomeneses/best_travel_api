@@ -14,6 +14,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Transactional //gestion de transacciones
@@ -28,7 +31,24 @@ public class TicketService implements ITicketService {
 
   @Override
   public TicketResponse create(TicketRequest request) {
-    return null;
+    /*variables de entrada del request*/
+    var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+    var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
+
+    /*persistir en la base de datos*/
+    var ticketToPersist = Ticket.builder()
+        .id(UUID.randomUUID())
+        .fly(fly)
+        .customer(customer)
+        .price(fly.getPrice().multiply(BigDecimal.valueOf(0.25)))
+        .purchaseDate(LocalDate.now())
+        .arrivalDate(LocalDateTime.now())
+        .departureDate(LocalDateTime.now())
+        .build();
+
+    var ticketPersisted = this.ticketRepository.save(ticketToPersist);
+    log.info("Ticket saved with id: {}",ticketPersisted.getId());
+    return this.entityToResponse(ticketPersisted);
   }
 
   @Override

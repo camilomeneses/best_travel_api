@@ -1,3 +1,9 @@
+# context path
+server:
+  servlet:
+    context-path: /best_travel
+
+#spring configuraciones generales
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5434/best_travel
@@ -7,6 +13,12 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 5
+  # serializacion y deserializacion de XML
+  jackson:
+    serialization:
+      INDENT_OUTPUT: true
+    xml:
+      enabled: true
 
 # Configuración para Hibernate y niveles de log
 logging:
@@ -17,3 +29,4 @@ logging:
         descriptor:
           sql:
             BasicBinder: TRACE
+
