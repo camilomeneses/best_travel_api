@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 /**
  * Service para FlyController
  */
-@Transactional //gestion de transacciones
+@Transactional(readOnly = true) //gestion de transacciones
 @Service
 @Slf4j
 @RequiredArgsConstructor
