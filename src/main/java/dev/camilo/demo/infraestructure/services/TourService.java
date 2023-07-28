@@ -37,6 +37,7 @@ public class TourService implements ITourService {
   //componente inyectado
   private final TourHelper tourHelper;
 
+  //crear tour
   /**
    * Metodo para crear un tour, recibe en el request un HashSet con los ids
    * de los vuelos, y un HashMap con los ids de los hoteles con los dias de reservacion,
@@ -77,6 +78,7 @@ public class TourService implements ITourService {
         .build();
   }
 
+  //obtener tour por id
   /**
    * Metodo para obtener un tour por su id
    * @param id Long
@@ -92,6 +94,7 @@ public class TourService implements ITourService {
         .build();
   }
 
+  //eliminar tour por id
   /**
    * Eliminar un tour por su id
    * @param id Long
@@ -102,14 +105,42 @@ public class TourService implements ITourService {
     this.tourRepository.deleteById(id);
   }
 
+  //eliminar ticket de tour
+  /**
+   * Metodo para eliminar un ticket de un tour
+   * @param ticketId UUID
+   * @param tourId Long
+   */
   @Override
   public void removeTicket(UUID ticketId, Long tourId) {
-
+    var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
+    /*eliminamos el ticket*/
+    tourToUpdate.removeTicket(ticketId);
+    /*actualizamos los tickets en el tour*/
+    this.tourRepository.save(tourToUpdate);
   }
 
+  //agregar ticket a tour
+  /**
+   * Metodo para agregar ticket a tour
+   * @param flyId Long
+   * @param tourId Long
+   * @return UUID
+   */
   @Override
   public UUID addTicket(Long flyId, Long tourId) {
-    return null;
+    /*traer tour para actualizar*/
+    var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
+    /*traer vuelo*/
+    var fly = this.flyRepository.findById(flyId).orElseThrow();
+    /*crear el ticket nuevo*/
+    var ticket = this.tourHelper.createTicket(fly,tourToUpdate.getCustomer());
+    /*agregar el ticker al tour*/
+    tourToUpdate.addTicket(ticket);
+    /*actualizar el tour con el nuevo ticket*/
+    this.tourRepository.save(tourToUpdate);
+    /*devolver el UUID del nuevo ticket agregado*/
+    return ticket.getId();
   }
 
   @Override

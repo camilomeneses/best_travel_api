@@ -82,4 +82,25 @@ public class TourHelper {
     });
     return response;
   }
+
+  /**
+   * Metodo para crear un ticket basado en un vuelo y customer determinados
+   * @param fly FLyEntity
+   * @param customer CustomerEntity
+   * @return TicketEntity
+   */
+  public TicketEntity createTicket(FlyEntity fly, CustomerEntity customer) {
+    /*persistir en la base de datos*/
+    var ticketToPersist = TicketEntity.builder()
+        .id(UUID.randomUUID())
+        .fly(fly)
+        .customer(customer)
+        /*aumentar el valor del precio un 25%*/
+        .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
+        .purchaseDate(LocalDate.now())
+        .departureDate(BestTravelUtil.getRandomSoon())
+        .arrivalDate(BestTravelUtil.getRandomLatter())
+        .build();
+    return this.ticketRepository.save(ticketToPersist);
+  }
 }

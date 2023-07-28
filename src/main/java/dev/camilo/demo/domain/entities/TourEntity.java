@@ -47,6 +47,9 @@ public class TourEntity {
   @JoinColumn(name = "id_customer")
   private CustomerEntity customer;
 
+  /**
+   * actualizar tickets y reservaciones antes de persistir o remover
+   */
   @PrePersist
   @PreRemove
   public void updateFK(){
@@ -54,4 +57,26 @@ public class TourEntity {
     this.reservations.forEach(reservation -> reservation.setTour(this));
   }
 
+  /**
+   * eliminar ticket por id
+   * @param id UUID
+   */
+  public void removeTicket(UUID id){
+    this.tickets.forEach(ticket -> {
+      if(ticket.getId().equals(id)){
+        ticket.setTour(null);
+      }
+    });
+  }
+
+  /**
+   * Agrear ticket a el HashSet de tickets, se hace relacion inversa
+   * para agregar en las reservaciones este tour
+   * @param ticket
+   */
+  public void addTicket(TicketEntity ticket){
+    if(Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
+    this.tickets.add(ticket);
+    this.reservations.forEach(reservation -> reservation.setTour(this));
+  }
 }
