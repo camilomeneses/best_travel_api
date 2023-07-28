@@ -34,15 +34,15 @@ public class ReservationEntity {
   /*mapeo directo tour*///check
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tour_id", nullable = true)
-  private TourEntity tourEntity;
+  private TourEntity tour;
 
   /*mapeo directo hotel*///check
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "hotel_id")
-  private HotelEntity hotelEntity;
+  private HotelEntity hotel;
 
   /*mapeo directo customer*///check
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "customer_id")
-  private CustomerEntity customerEntity;
+  private CustomerEntity customer;
 }

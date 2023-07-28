@@ -68,8 +68,8 @@ public class TourHelper {
     hotelsByDays.forEach((hotel, totalDays) -> {
       var reservationToPersist = ReservationEntity.builder()
           .id(UUID.randomUUID())
-          .hotelEntity(hotel)
-          .customerEntity(customer)
+          .hotel(hotel)
+          .customer(customer)
           .totalDays(totalDays)
           .dateTimeReservation(LocalDateTime.now())
           .dateStart(LocalDate.now())

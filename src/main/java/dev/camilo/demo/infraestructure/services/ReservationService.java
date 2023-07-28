@@ -48,8 +48,8 @@ public class ReservationService implements IReservationService {
     /*persistir en la base de datos*/
     var reservationToPersist = ReservationEntity.builder()
         .id(UUID.randomUUID())
-        .hotelEntity(hotel)
-        .customerEntity(customer)
+        .hotel(hotel)
+        .customer(customer)
         .totalDays(request.getTotalDays())
         .dateTimeReservation(LocalDateTime.now())
         .dateStart(LocalDate.now())
@@ -92,7 +92,7 @@ public class ReservationService implements IReservationService {
     var reservationToUpdate = reservationRepository.findById(id).orElseThrow();
 
     /*seteo de hotel en reservation*/
-    reservationToUpdate.setHotelEntity(hotel);
+    reservationToUpdate.setHotel(hotel);
     reservationToUpdate.setTotalDays(request.getTotalDays());
     reservationToUpdate.setDateTimeReservation(LocalDateTime.now());
     reservationToUpdate.setDateStart(LocalDate.now());
@@ -139,7 +139,7 @@ public class ReservationService implements IReservationService {
     var response = new ReservationResponse();
     BeanUtils.copyProperties(entity, response);
     var hotelResponse = new HotelResponse();
-    BeanUtils.copyProperties(entity.getHotelEntity(), hotelResponse);
+    BeanUtils.copyProperties(entity.getHotel(), hotelResponse);
     response.setHotel(hotelResponse);
     return response;
   }
