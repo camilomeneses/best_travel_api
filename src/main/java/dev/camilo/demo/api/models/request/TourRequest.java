@@ -1,5 +1,6 @@
 package dev.camilo.demo.api.models.request;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,8 +16,8 @@ import java.util.Set;
 @AllArgsConstructor
 @Data
 @Builder
+@JacksonXmlRootElement(localName = "TourRequest")
 public class TourRequest implements Serializable {
-
   public String customerId;
   private Set<TourFlyRequest> flights;
   private Set<TourHotelRequest> hotels;

@@ -52,31 +52,57 @@ public class TourEntity {
    */
   @PrePersist
   @PreRemove
-  public void updateFK(){
+  public void updateFK() {
     this.tickets.forEach(ticket -> ticket.setTour(this));
     this.reservations.forEach(reservation -> reservation.setTour(this));
   }
 
+  //tratamiento de tickets
+
+  /**
+   * Agregar ticket a el HashSet de tickets, se hace relacion inversa
+   * para agregar el id_tour a cada ticket correspondiente (llave foranea)
+   *
+   * @param ticket
+   */
+  public void addTicket(TicketEntity ticket) {
+    if (Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
+    this.tickets.add(ticket);
+    this.tickets.forEach(t -> t.setTour(this));
+  }
+
   /**
    * eliminar ticket por id
+   *
    * @param id UUID
    */
-  public void removeTicket(UUID id){
+  public void removeTicket(UUID id) {
     this.tickets.forEach(ticket -> {
-      if(ticket.getId().equals(id)){
+      if (ticket.getId().equals(id)) {
         ticket.setTour(null);
       }
     });
   }
 
+  //tratamiento de reservations
+
   /**
-   * Agrear ticket a el HashSet de tickets, se hace relacion inversa
-   * para agregar en las reservaciones este tour
-   * @param ticket
+   * Agregar reservation a el HashSet de reservations, se hace relacion inversa
+   * para agregar el id_tour a cada reservation correspondiente (llave foranea)
+   *
+   * @param reservation
    */
-  public void addTicket(TicketEntity ticket){
-    if(Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
-    this.tickets.add(ticket);
-    this.reservations.forEach(reservation -> reservation.setTour(this));
+  public void addReservation(ReservationEntity reservation) {
+    if (Objects.isNull(this.reservations)) this.reservations = new HashSet<>();
+    this.reservations.add(reservation);
+    this.reservations.forEach(r -> r.setTour(this));
+  }
+
+  public void removeReservation(UUID id) {
+    this.reservations.forEach((reservation -> {
+      if(reservation.getId().equals(id)) {
+        reservation.setTour(null);
+      }
+    }));
   }
 }

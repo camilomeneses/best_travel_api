@@ -105,22 +105,8 @@ public class TourService implements ITourService {
     this.tourRepository.deleteById(id);
   }
 
-  //eliminar ticket de tour
-  /**
-   * Metodo para eliminar un ticket de un tour
-   * @param ticketId UUID
-   * @param tourId Long
-   */
-  @Override
-  public void removeTicket(UUID ticketId, Long tourId) {
-    var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
-    /*eliminamos el ticket*/
-    tourToUpdate.removeTicket(ticketId);
-    /*actualizamos los tickets en el tour*/
-    this.tourRepository.save(tourToUpdate);
-  }
-
-  //agregar ticket a tour
+  //Tratamiendo de tickets
+  /*agregar ticket a tour*/
   /**
    * Metodo para agregar ticket a tour
    * @param flyId Long
@@ -128,7 +114,7 @@ public class TourService implements ITourService {
    * @return UUID
    */
   @Override
-  public UUID addTicket(Long flyId, Long tourId) {
+  public UUID addTicket(Long tourId,Long flyId) {
     /*traer tour para actualizar*/
     var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
     /*traer vuelo*/
@@ -143,13 +129,57 @@ public class TourService implements ITourService {
     return ticket.getId();
   }
 
+  /*eliminar ticket de tour*/
+  /**
+   * Metodo para eliminar un ticket de un tour
+   * @param ticketId UUID
+   * @param tourId Long
+   */
   @Override
-  public void removeReservation(UUID reservationId, Long tourId) {
-
+  public void removeTicket(Long tourId,UUID ticketId ) {
+    var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
+    /*eliminamos el ticket*/
+    tourToUpdate.removeTicket(ticketId);
+    /*actualizamos los tickets en el tour*/
+    this.tourRepository.save(tourToUpdate);
   }
 
+  //Tratamiendo de reservations
+  /**
+   * Metodo para crear una reservation e incluirla en el tour
+   * @param tourId Long
+   * @param hotelId Long
+   * @param totalDays Integer
+   * @return UUID
+   */
   @Override
-  public UUID addReservation(Long hotelId, Long tourId) {
-    return null;
+  public UUID addReservation(Long tourId,Long hotelId, Integer totalDays ) {
+    /*traer tour para actualizar*/
+    var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
+    /*traer hotel*/
+    var hotel = this.hotelRepository.findById(hotelId).orElseThrow();
+    /*hacemos reservation*/
+    var reservation = this.tourHelper.createReservation(hotel, tourToUpdate.getCustomer(),totalDays);
+    /*actualizamos el tour con la nueva reservation*/
+    tourToUpdate.addReservation(reservation);
+    /*persistimos*/
+    this.tourRepository.save(tourToUpdate);
+    return reservation.getId();
   }
+
+  /*eliminar reservation de tour*/
+  /**
+   * Metodo para eliminar una reservation de un tour
+   * @param tourId Long
+   * @param reservationId UUID
+   */
+  @Override
+  public void removeReservation(Long tourId,UUID reservationId ) {
+    var tourToUpdate = this.tourRepository.findById(tourId).orElseThrow();
+    /*eliminamos el ticket*/
+    tourToUpdate.removeReservation(reservationId);
+    /*actualizamos los tickets en el tour*/
+    this.tourRepository.save(tourToUpdate);
+  }
+
 }

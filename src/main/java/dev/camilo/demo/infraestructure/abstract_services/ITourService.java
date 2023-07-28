@@ -12,31 +12,33 @@ public interface ITourService extends SimpleCrudService<TourRequest, TourRespons
 
   /**
    * eliminar un ticket del tour
-   * @param ticketId
-   * @param tourId
+   * @param tourId Long
+   * @param ticketId UUID
    */
-  void removeTicket(UUID ticketId, Long tourId);
+  void removeTicket(Long tourId,UUID ticketId);
 
   /**
    * agregar vuelo de ticket al tour
-   * @param flyId
-   * @param tourId
+   * @param tourId Long
+   * @param flyId Long
    * @return
    */
-  UUID addTicket(Long flyId, Long tourId);
+  UUID addTicket(Long tourId,Long flyId);
 
   /**
    * eliminar una reservation del tour
-   * @param reservationId
-   * @param tourId
+   * @param tourId Long
+   * @param reservationId UUID
    */
-  void removeReservation(UUID reservationId, Long tourId);
+  void removeReservation(Long tourId,UUID reservationId);
 
   /**
-   * agregar un hotel de reservation al tour
-   * @param hotelId
-   * @param tourId
-   * @return
+   * agregar un hotel de reservation al tour con el numero de dias
+   * a reservar
+   * @param tourId Long
+   * @param hotelId Long
+   * @param totalDays Integer
+   * @return UUID
    */
-  UUID addReservation(Long hotelId, Long tourId);
+  UUID addReservation(Long tourId,Long hotelId, Integer totalDays);
 }

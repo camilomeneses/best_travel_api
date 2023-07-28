@@ -1,12 +1,16 @@
 package dev.camilo.demo.api.controllers;
 
 import dev.camilo.demo.api.models.request.TourRequest;
+import dev.camilo.demo.api.models.responses.TourReservationResponse;
 import dev.camilo.demo.api.models.responses.TourResponse;
+import dev.camilo.demo.api.models.responses.TourTicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITourService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 /**
  * Controller REST para respuestas JSON y XML para tour
@@ -25,9 +29,9 @@ public class TourController {
    * Metodo para crear un tour, regresa un JSON o XML segun
    * el Content-Type del Header
    *
-   * @param contentType
-   * @param request
-   * @return
+   * @param contentType Header
+   * @param request TourRequest
+   * @return ResponseEntity
    */
   @PostMapping
   public ResponseEntity<TourResponse> post(
@@ -75,8 +79,112 @@ public class TourController {
    * @return ResponseEntity
    */
   @DeleteMapping(path = "{id}")
-  public ResponseEntity<TourResponse> delete(@PathVariable Long id){
+  public ResponseEntity<Void> delete(@PathVariable Long id){
     this.tourService.delete(id);
     return ResponseEntity.noContent().build();
+  }
+
+  //eliminar ticket de tour
+  /**
+   * Eliminar ticket de tour
+   * @param tourId Long
+   * @param ticketId UUID
+   * @return ResponseEntity
+   */
+  @PatchMapping(path = "{tourId}/remove_ticket/{ticketId}")
+  public ResponseEntity<Void> deleteTicket(
+      @PathVariable Long tourId,
+      @PathVariable UUID ticketId
+      ){
+    this.tourService.removeTicket(tourId,ticketId);
+    return ResponseEntity.noContent().build();
+  }
+
+  //agregar ticket a tour JSON
+  /**
+   * Metodo para agregar el ticket a el tour,
+   * response formato JSON
+   * @param tourId Long
+   * @param flyId Long
+   * @return ResponseEntity
+   */
+  @PatchMapping(path = "{tourId}/add_ticket/{flyId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<TourTicketResponse> addTicketJson(
+      @PathVariable Long tourId,
+      @PathVariable Long flyId
+  ){
+    var response = new TourTicketResponse(this.tourService.addTicket(tourId,flyId));
+    return ResponseEntity.ok(response);
+  }
+
+  //agregar ticket a tour XML
+  /**
+   * Metodo para agregar el ticket a el tour,
+   * response formato XML
+   * @param tourId Long
+   * @param flyId Long
+   * @return ResponseEntity
+   */
+  @PatchMapping(path = "/xml/{tourId}/add_ticket/{flyId}", produces = MediaType.APPLICATION_XML_VALUE)
+  public ResponseEntity<TourTicketResponse> addTicketXml(
+      @PathVariable Long tourId,
+      @PathVariable Long flyId
+  ){
+    var response = new TourTicketResponse(this.tourService.addTicket(tourId,flyId));
+    return ResponseEntity.ok(response);
+  }
+
+  //eliminar reservation de tour
+  /**
+   * Metodo para eliminar una reservation de un tour
+   * @param tourId  Long
+   * @param reservationId UUID
+   * @return ResponseEntity
+   */
+  @PatchMapping(path = "{tourId}/remove_reservation/{reservationId}")
+  public ResponseEntity<Void> deleteReservation(
+      @PathVariable Long tourId,
+      @PathVariable UUID reservationId
+  ){
+    this.tourService.removeReservation(tourId,reservationId);
+    return ResponseEntity.noContent().build();
+  }
+
+  //agregar reservation a tour JSON
+  /**
+   * Agregar una reservation a tour, response
+   * formato JSON
+   * @param tourId Long
+   * @param hotelId Long
+   * @param totalDays Integer
+   * @return ResponseEntity
+   */
+  @PatchMapping(path = "{tourId}/add_reservation/{hotelId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<TourReservationResponse> addReservationJson(
+      @PathVariable Long tourId,
+      @PathVariable Long hotelId,
+      @RequestParam Integer totalDays
+  ){
+    var response = new TourReservationResponse(this.tourService.addReservation(tourId,hotelId,totalDays));
+    return ResponseEntity.ok(response);
+  }
+
+  //agregar reservation a tour XML
+  /**
+   * Agregar una reservation a tour, response
+   * formato XML
+   * @param tourId Long
+   * @param hotelId Long
+   * @param totalDays Integer
+   * @return ResponseEntity
+   */
+  @PatchMapping(path = "/xml/{tourId}/add_reservation/{hotelId}", produces = MediaType.APPLICATION_XML_VALUE)
+  public ResponseEntity<TourReservationResponse> addReservationXml(
+      @PathVariable Long tourId,
+      @PathVariable Long hotelId,
+      @RequestParam Integer totalDays
+  ){
+    var response = new TourReservationResponse(this.tourService.addReservation(tourId,hotelId,totalDays));
+    return ResponseEntity.ok(response);
   }
 }

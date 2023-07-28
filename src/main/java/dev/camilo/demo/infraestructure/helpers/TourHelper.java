@@ -29,6 +29,30 @@ public class TourHelper {
   private final TicketRepository ticketRepository;
   private final ReservationRepository reservationRepository;
 
+  //tratamiento de tickets
+
+  /**
+   * Metodo para crear un ticket basado en un vuelo y customer determinados
+   *
+   * @param fly      FLyEntity
+   * @param customer CustomerEntity
+   * @return TicketEntity
+   */
+  public TicketEntity createTicket(FlyEntity fly, CustomerEntity customer) {
+    /*persistir en la base de datos*/
+    var ticketToPersist = TicketEntity.builder()
+        .id(UUID.randomUUID())
+        .fly(fly)
+        .customer(customer)
+        /*aumentar el valor del precio un 25%*/
+        .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
+        .purchaseDate(LocalDate.now())
+        .departureDate(BestTravelUtil.getRandomSoon())
+        .arrivalDate(BestTravelUtil.getRandomLatter())
+        .build();
+    return this.ticketRepository.save(ticketToPersist);
+  }
+
   /**
    * Creacion de varios tickets recibimos la lista de vuelos y el cliente
    *
@@ -53,6 +77,35 @@ public class TourHelper {
       response.add(this.ticketRepository.save(ticketToPersist));
     });
     return response;
+  }
+
+  //tratamiento de reservations
+
+  /**
+   * Metodo para crear una reservation
+   * @param hotel HotelEntity
+   * @param customer CustomerEntity
+   * @param totalDays Integer
+   * @return ReservationEntity
+   */
+  public ReservationEntity createReservation(
+      HotelEntity hotel,
+      CustomerEntity customer,
+      Integer totalDays) {
+    /*persistir en la base de datos*/
+    var reservationToPersist = ReservationEntity.builder()
+        .id(UUID.randomUUID())
+        .hotel(hotel)
+        .customer(customer)
+        .totalDays(totalDays)
+        .dateTimeReservation(LocalDateTime.now())
+        .dateStart(LocalDate.now())
+        .dateEnd(LocalDate.now().plusDays(totalDays))
+        /*aumentar el valor del precio un 20%*/
+        .price(hotel.getPrice().add(hotel.getPrice().multiply(ReservationService.CHARGES_PRICE_PERCENTAGE)))
+        .build();
+
+    return this.reservationRepository.save(reservationToPersist);
   }
 
   /**
@@ -83,24 +136,5 @@ public class TourHelper {
     return response;
   }
 
-  /**
-   * Metodo para crear un ticket basado en un vuelo y customer determinados
-   * @param fly FLyEntity
-   * @param customer CustomerEntity
-   * @return TicketEntity
-   */
-  public TicketEntity createTicket(FlyEntity fly, CustomerEntity customer) {
-    /*persistir en la base de datos*/
-    var ticketToPersist = TicketEntity.builder()
-        .id(UUID.randomUUID())
-        .fly(fly)
-        .customer(customer)
-        /*aumentar el valor del precio un 25%*/
-        .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
-        .purchaseDate(LocalDate.now())
-        .departureDate(BestTravelUtil.getRandomSoon())
-        .arrivalDate(BestTravelUtil.getRandomLatter())
-        .build();
-    return this.ticketRepository.save(ticketToPersist);
-  }
+
 }
