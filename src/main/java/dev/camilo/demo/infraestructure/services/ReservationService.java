@@ -8,6 +8,7 @@ import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.domain.repositories.ReservationRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IReservationService;
+import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -32,6 +33,9 @@ public class ReservationService implements IReservationService {
   private final ReservationRepository reservationRepository;
   private final CustomerRepository customerRepository;
   private final HotelRepository hotelRepository;
+
+  //componente inyectado
+  private final CustomerHelper customerHelper;
 
   //crear nueva reservation
   /**
@@ -58,7 +62,12 @@ public class ReservationService implements IReservationService {
         .price(hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
         .build();
 
+    /*persistir*/
     var reservationPersisted = reservationRepository.save(reservationToPersist);
+
+    /*incremetar contador de reservaciones para customer*/
+    this.customerHelper.increase(customer.getDni(), ReservationService.class);
+
     return this.entityToResponse(reservationPersisted);
   }
 

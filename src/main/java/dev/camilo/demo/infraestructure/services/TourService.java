@@ -8,6 +8,7 @@ import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.domain.repositories.TourRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ITourService;
+import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.infraestructure.helpers.TourHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,9 @@ public class TourService implements ITourService {
   private final HotelRepository hotelRepository;
   private final CustomerRepository customerRepository;
 
-  //componente inyectado
+  //componentes inyectados
   private final TourHelper tourHelper;
+  private  final CustomerHelper customerHelper;
 
   //crear tour
   /**
@@ -69,6 +71,9 @@ public class TourService implements ITourService {
 
     /*persistiendo objeto*/
     var tourSaved = this.tourRepository.save(tourToSave);
+
+    /*incrementar contador de tour para customer*/
+    this.customerHelper.increase(customer.getDni(), TourService.class);
 
     /*construyendo y retornando DTO TourResponse*/
     return TourResponse.builder()

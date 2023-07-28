@@ -8,6 +8,7 @@ import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.TicketRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
+import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.util.BestTravelUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,9 @@ public class TicketService implements ITicketService {
   private final CustomerRepository customerRepository;
   private final TicketRepository ticketRepository;
 
+  //componente inyectado
+  private final CustomerHelper customerHelper;
+
   //crear nuevo ticket
   /**
    * Metodo para crear un nuevo ticket
@@ -57,8 +61,13 @@ public class TicketService implements ITicketService {
         .arrivalDate(BestTravelUtil.getRandomLatter())
         .build();
 
+        /*persistir el ticket*/
     var ticketPersisted = this.ticketRepository.save(ticketToPersist);
     log.info("Ticket saved with id: {}",ticketPersisted.getId());
+
+    /*incrementar contador de flights para customer*/
+    this.customerHelper.increase(customer.getDni(), TicketService.class);
+
     return this.entityToResponse(ticketPersisted);
   }
 
