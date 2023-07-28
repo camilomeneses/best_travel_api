@@ -3,7 +3,7 @@ package dev.camilo.demo.infraestructure.services;
 import dev.camilo.demo.api.models.request.ReservationRequest;
 import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.api.models.responses.ReservationResponse;
-import dev.camilo.demo.domain.entities.Reservation;
+import dev.camilo.demo.domain.entities.ReservationEntity;
 import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.domain.repositories.ReservationRepository;
@@ -46,10 +46,10 @@ public class ReservationService implements IReservationService {
     var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
 
     /*persistir en la base de datos*/
-    var reservationToPersist = Reservation.builder()
+    var reservationToPersist = ReservationEntity.builder()
         .id(UUID.randomUUID())
-        .hotel(hotel)
-        .customer(customer)
+        .hotelEntity(hotel)
+        .customerEntity(customer)
         .totalDays(request.getTotalDays())
         .dateTimeReservation(LocalDateTime.now())
         .dateStart(LocalDate.now())
@@ -92,7 +92,7 @@ public class ReservationService implements IReservationService {
     var reservationToUpdate = reservationRepository.findById(id).orElseThrow();
 
     /*seteo de hotel en reservation*/
-    reservationToUpdate.setHotel(hotel);
+    reservationToUpdate.setHotelEntity(hotel);
     reservationToUpdate.setTotalDays(request.getTotalDays());
     reservationToUpdate.setDateTimeReservation(LocalDateTime.now());
     reservationToUpdate.setDateStart(LocalDate.now());
@@ -135,11 +135,11 @@ public class ReservationService implements IReservationService {
    * @param entity Reservation
    * @return ReservationResponse
    */
-  private ReservationResponse entityToResponse(Reservation entity) {
+  private ReservationResponse entityToResponse(ReservationEntity entity) {
     var response = new ReservationResponse();
     BeanUtils.copyProperties(entity, response);
     var hotelResponse = new HotelResponse();
-    BeanUtils.copyProperties(entity.getHotel(), hotelResponse);
+    BeanUtils.copyProperties(entity.getHotelEntity(), hotelResponse);
     response.setHotel(hotelResponse);
     return response;
   }
@@ -148,6 +148,6 @@ public class ReservationService implements IReservationService {
   /**
    * Adicional por reservation
    */
-  private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.20);
+  public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.20);
 
 }

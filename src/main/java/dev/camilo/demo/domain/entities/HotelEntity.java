@@ -11,7 +11,7 @@ import java.util.Set;
 @Data
 @Builder
 @AllArgsConstructor
-public class Hotel {
+public class HotelEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,5 +33,5 @@ public class Hotel {
       mappedBy = "hotel",
       fetch = FetchType.LAZY
   )
-  private Set<Reservation> reservations;
+  private Set<ReservationEntity> reservations;
 }

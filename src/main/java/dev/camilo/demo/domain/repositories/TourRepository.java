@@ -1,8 +1,8 @@
 package dev.camilo.demo.domain.repositories;
 
-import dev.camilo.demo.domain.entities.Tour;
+import dev.camilo.demo.domain.entities.TourEntity;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface TourRepository extends CrudRepository<Tour,Long> {
+public interface TourRepository extends CrudRepository<TourEntity,Long> {
 }

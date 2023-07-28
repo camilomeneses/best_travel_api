@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @Builder
 @AllArgsConstructor
-public class Fly {
+public class FlyEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,5 +40,5 @@ public class Fly {
       cascade = CascadeType.ALL,
       fetch = FetchType.LAZY,
       orphanRemoval = true)
-  private Set<Ticket> tickets;
+  private Set<TicketEntity> tickets;
 }

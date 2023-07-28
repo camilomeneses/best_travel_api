@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * DTO Request para TourController
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

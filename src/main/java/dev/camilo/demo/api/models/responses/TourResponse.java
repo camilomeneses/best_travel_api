@@ -9,6 +9,9 @@ import java.io.Serializable;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * DTO Response para TourController
+ */
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

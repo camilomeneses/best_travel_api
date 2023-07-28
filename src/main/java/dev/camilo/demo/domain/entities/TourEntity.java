@@ -13,7 +13,7 @@ import java.util.UUID;
 @Data
 @Builder
 @AllArgsConstructor
-public class Tour {
+public class TourEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -28,7 +28,7 @@ public class Tour {
       fetch = FetchType.LAZY,
       orphanRemoval = true
   )
-  private Set<Reservation> reservations;
+  private Set<ReservationEntity> reservations;
 
   /*mapeo inverso - Ticket*///check
   //Excluir ToString y Equals infinito
@@ -40,20 +40,20 @@ public class Tour {
       fetch = FetchType.LAZY,
       orphanRemoval = true
   )
-  private Set<Ticket> tickets;
+  private Set<TicketEntity> tickets;
 
   /*mapeo directo customer*///check
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "id_customer")
-  private Customer customer;
+  private CustomerEntity customer;
 
   /*relacion inversa de los tickets*/
   //add, update and remove tickets
-  public void addTicket(Ticket ticket){
+  public void addTicket(TicketEntity ticketEntity){
     if(Objects.isNull(this.tickets)){
       this.tickets = new HashSet<>();
     }
-    this.tickets.add(ticket);
+    this.tickets.add(ticketEntity);
   }
 
   /*seteo del tour actual a los ticket*/
@@ -70,16 +70,15 @@ public class Tour {
 
     /*relacion inversa de las reservaciones*/
     //add, update and remove reservations
-    public void addReservation(Reservation reservation){
+    public void addReservation(ReservationEntity reservationEntity){
       if(Objects.isNull(this.reservations)){
         this.reservations = new HashSet<>();
       }
-      this.reservations.add(reservation);
+      this.reservations.add(reservationEntity);
     }
 
     public void updateReservations(){
-
-      this.reservations.forEach(reservation -> reservation.setTour(this));
+      this.reservations.forEach(reservation -> reservation.setTourEntity(this));
     }
 
     public  void removeReservation(UUID id){

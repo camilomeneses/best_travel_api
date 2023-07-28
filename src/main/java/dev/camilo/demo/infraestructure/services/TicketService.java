@@ -3,7 +3,7 @@ package dev.camilo.demo.infraestructure.services;
 import dev.camilo.demo.api.models.request.TicketRequest;
 import dev.camilo.demo.api.models.responses.FlyResponse;
 import dev.camilo.demo.api.models.responses.TicketResponse;
-import dev.camilo.demo.domain.entities.Ticket;
+import dev.camilo.demo.domain.entities.TicketEntity;
 import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.TicketRepository;
@@ -46,7 +46,7 @@ public class TicketService implements ITicketService {
     var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
 
     /*persistir en la base de datos*/
-    var ticketToPersist = Ticket.builder()
+    var ticketToPersist = TicketEntity.builder()
         .id(UUID.randomUUID())
         .fly(fly)
         .customer(customer)
@@ -133,7 +133,7 @@ public class TicketService implements ITicketService {
    * @param entity Ticket
    * @return TicketResponse
    */
-  private TicketResponse entityToResponse(Ticket entity){
+  private TicketResponse entityToResponse(TicketEntity entity){
     var response = new TicketResponse();
     BeanUtils.copyProperties(entity,response);
     var flyResponse = new FlyResponse();
@@ -146,5 +146,5 @@ public class TicketService implements ITicketService {
   /**
    * Adicional por vuelo
    */
-  private static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
+  public static final BigDecimal CHARGES_PRICE_PERCENTAGE = BigDecimal.valueOf(0.25);
 }

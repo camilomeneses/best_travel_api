@@ -1,7 +1,7 @@
 package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.api.models.responses.FlyResponse;
-import dev.camilo.demo.domain.entities.Fly;
+import dev.camilo.demo.domain.entities.FlyEntity;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IFlyService;
 import dev.camilo.demo.util.SortType;
@@ -102,7 +102,7 @@ public class FlyService implements IFlyService {
    * @param entity Fly
    * @return DTO FlyResponse
    */
-  private FlyResponse entityToResponse(Fly entity){
+  private FlyResponse entityToResponse(FlyEntity entity){
     FlyResponse response = new FlyResponse();
     BeanUtils.copyProperties(entity,response);
     return response;

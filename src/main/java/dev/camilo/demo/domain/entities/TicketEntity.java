@@ -11,38 +11,31 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity(name = "reservation")
+@Entity(name = "ticket")
 @NoArgsConstructor
 @Data
 @Builder
 @AllArgsConstructor
-public class Reservation {
+public class TicketEntity {
 
   @Id
   private UUID id;
-
-  /*timestamp*/
-  @Column(name = "date_reservation")
-  private LocalDateTime dateTimeReservation;
-  private LocalDate dateStart;
-
-  @Column(nullable = true)
-  private LocalDate dateEnd;
-  private Integer totalDays;
+  private LocalDateTime departureDate;
+  private LocalDateTime arrivalDate;
+  private LocalDate purchaseDate;
   private BigDecimal price;
-
   /*mapeo directo tour*///check
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "tour_id", nullable = true)
-  private Tour tour;
+  private TourEntity tour;
 
-  /*mapeo directo hotel*///check
+  /*mapeo directo fly*///check
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "hotel_id")
-  private Hotel hotel;
+  @JoinColumn(name = "fly_id")
+  private FlyEntity fly;
 
   /*mapeo directo customer*///check
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "customer_id")
-  private Customer customer;
+  private CustomerEntity customer;
 }

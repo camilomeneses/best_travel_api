@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Builder
 @AllArgsConstructor
-public class Customer {
+public class CustomerEntity {
 
   @Id
   private String dni;
@@ -35,7 +35,7 @@ public class Customer {
       mappedBy = "customer",
       fetch = FetchType.LAZY
   )
-  private Set<Tour> tours;
+  private Set<TourEntity> tour;
 
   /*mapeo inverso customer_id - Reservation*///check
   //Excluir ToString y Equals infinito
@@ -47,7 +47,7 @@ public class Customer {
       mappedBy = "customer",
       fetch = FetchType.LAZY
   )
-  private Set<Reservation> reservations;
+  private Set<ReservationEntity> reservations;
 
   /*mapeo inverso customer_id - Ticket*///check
   //Excluir ToString y Equals infinito
@@ -59,5 +59,5 @@ public class Customer {
       mappedBy = "customer",
       fetch = FetchType.LAZY
   )
-  private Set<Ticket> tickets;
+  private Set<TicketEntity> tickets;
 }

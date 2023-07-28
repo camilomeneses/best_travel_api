@@ -1,7 +1,7 @@
 package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.api.models.responses.HotelResponse;
-import dev.camilo.demo.domain.entities.Hotel;
+import dev.camilo.demo.domain.entities.HotelEntity;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
 import dev.camilo.demo.util.SortType;
@@ -110,7 +110,7 @@ public class HotelService implements IHotelService {
    * @param entity Fly
    * @return DTO FlyResponse
    */
-  private HotelResponse entityToResponse(Hotel entity) {
+  private HotelResponse entityToResponse(HotelEntity entity) {
     HotelResponse response = new HotelResponse();
     BeanUtils.copyProperties(entity, response);
     return response;
