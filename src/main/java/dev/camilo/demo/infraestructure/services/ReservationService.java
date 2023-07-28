@@ -122,6 +122,8 @@ public class ReservationService implements IReservationService {
   public void delete(UUID id) {
     /*variables de entrada del request*/
     var reservationToDelete = reservationRepository.findById(id).orElseThrow();
+    /*reducir el contador de reservations en customer*/
+    this.customerHelper.decrease(reservationToDelete.getCustomer().getDni(), ReservationService.class);
     this.reservationRepository.delete(reservationToDelete);
   }
 

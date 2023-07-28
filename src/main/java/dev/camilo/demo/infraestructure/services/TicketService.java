@@ -119,6 +119,8 @@ public class TicketService implements ITicketService {
   public void delete(UUID id) {
     /*variables de entrada del request*/
     var ticketToDelete = ticketRepository.findById(id).orElseThrow();
+    /*reducir contador de tickets en customer*/
+    this.customerHelper.decrease(ticketToDelete.getCustomer().getDni(), TicketService.class);
     this.ticketRepository.delete(ticketToDelete);
   }
 

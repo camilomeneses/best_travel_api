@@ -107,6 +107,8 @@ public class TourService implements ITourService {
   @Override
   public void delete(Long id) {
     var tourToDelete = this.tourRepository.findById(id).orElseThrow();
+    /*reducir contador de tour en customer*/
+    this.customerHelper.decrease(tourToDelete.getCustomer().getDni(), TourService.class);
     this.tourRepository.deleteById(id);
   }
 
