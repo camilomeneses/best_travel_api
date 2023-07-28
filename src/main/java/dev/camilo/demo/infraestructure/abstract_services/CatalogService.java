@@ -1,6 +1,6 @@
 package dev.camilo.demo.infraestructure.abstract_services;
 
-import dev.camilo.demo.util.SortType;
+import dev.camilo.demo.util.enums.SortType;
 import org.springframework.data.domain.Page;
 
 import java.math.BigDecimal;

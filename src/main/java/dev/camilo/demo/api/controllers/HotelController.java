@@ -2,7 +2,7 @@ package dev.camilo.demo.api.controllers;
 
 import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
-import dev.camilo.demo.util.SortType;
+import dev.camilo.demo.util.enums.SortType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;

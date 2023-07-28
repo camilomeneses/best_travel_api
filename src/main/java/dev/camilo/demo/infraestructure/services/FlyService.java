@@ -4,7 +4,7 @@ import dev.camilo.demo.api.models.responses.FlyResponse;
 import dev.camilo.demo.domain.entities.FlyEntity;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IFlyService;
-import dev.camilo.demo.util.SortType;
+import dev.camilo.demo.util.enums.SortType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;

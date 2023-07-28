@@ -1,6 +1,6 @@
 package dev.camilo.demo.api.models.responses;
 
-import dev.camilo.demo.util.AeroLine;
+import dev.camilo.demo.util.enums.AeroLine;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.entities;
 
-import dev.camilo.demo.util.AeroLine;
+import dev.camilo.demo.util.enums.AeroLine;
 import jakarta.persistence.*;
 import lombok.*;
 
