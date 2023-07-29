@@ -8,8 +8,11 @@ import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.TicketRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
+import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.util.BestTravelUtil;
+import dev.camilo.demo.util.enums.Tables;
+import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -34,8 +37,9 @@ public class TicketService implements ITicketService {
   private final CustomerRepository customerRepository;
   private final TicketRepository ticketRepository;
 
-  //componente inyectado
+  //componentes inyectados
   private final CustomerHelper customerHelper;
+  private final BlackListHelper blackListHelper;
 
   //crear nuevo ticket
   /**
@@ -45,9 +49,14 @@ public class TicketService implements ITicketService {
    */
   @Override
   public TicketResponse create(TicketRequest request) {
+    this.blackListHelper.isInBlackListCustomer(request.getIdClient());
     /*variables de entrada del request*/
-    var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
-    var customer = customerRepository.findById(request.getIdClient()).orElseThrow();
+    var fly = flyRepository
+        .findById(request.getIdFly())
+        .orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
+    var customer = customerRepository
+        .findById(request.getIdClient())
+        .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
     /*persistir en la base de datos*/
     var ticketToPersist = TicketEntity.builder()
@@ -80,7 +89,9 @@ public class TicketService implements ITicketService {
   @Override
   public TicketResponse read(UUID id) {
     /*variables de entrada del request*/
-    var ticketFromDB = this.ticketRepository.findById(id).orElseThrow();
+    var ticketFromDB = this.ticketRepository
+        .findById(id)
+        .orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
     return this.entityToResponse(ticketFromDB);
   }
 
@@ -89,13 +100,17 @@ public class TicketService implements ITicketService {
    * Metodo para actualiza un ticket
    * @param request TicketRequest
    * @param id UUID
-   * @return TicketResponse
+   * @return TicketResponseb
    */
   @Override
   public TicketResponse update(TicketRequest request, UUID id) {
     /*variables de entrada del request*/
-    var ticketToUpdate = ticketRepository.findById(id).orElseThrow();
-    var fly = flyRepository.findById(request.getIdFly()).orElseThrow();
+    var ticketToUpdate = ticketRepository
+        .findById(id)
+        .orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
+    var fly = flyRepository
+        .findById(request.getIdFly())
+        .orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
 
     /*actualizacion de valores en el ticket*/
     /*seteo de fly en en ticket*/
@@ -118,7 +133,9 @@ public class TicketService implements ITicketService {
   @Override
   public void delete(UUID id) {
     /*variables de entrada del request*/
-    var ticketToDelete = ticketRepository.findById(id).orElseThrow();
+    var ticketToDelete = ticketRepository
+        .findById(id)
+        .orElseThrow(() -> new IdNotFoundException(Tables.ticket.name()));
     /*reducir contador de tickets en customer*/
     this.customerHelper.decrease(ticketToDelete.getCustomer().getDni(), TicketService.class);
     this.ticketRepository.delete(ticketToDelete);
@@ -133,7 +150,9 @@ public class TicketService implements ITicketService {
    */
   @Override
   public BigDecimal findPrice(Long flyId) {
-    var fly = this.flyRepository.findById(flyId).orElseThrow();
+    var fly = this.flyRepository
+        .findById(flyId)
+        .orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
     return fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
   }
 

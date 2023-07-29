@@ -5,6 +5,7 @@ import dev.camilo.demo.api.models.responses.TourReservationResponse;
 import dev.camilo.demo.api.models.responses.TourResponse;
 import dev.camilo.demo.api.models.responses.TourTicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITourService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class TourController {
   @PostMapping
   public ResponseEntity<TourResponse> post(
       @RequestHeader("Content-Type") String contentType,
-      @RequestBody TourRequest request
+      @Valid @RequestBody TourRequest request
   ) {
     if (MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
       return ResponseEntity.ok()

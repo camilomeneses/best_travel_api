@@ -19,7 +19,7 @@ public class ReservationRequest implements Serializable {
   @Size(min = 10,max = 20, message = "The size have to a length between 18 and 20 characters")
   @NotBlank(message = "Id client is mandatory")
   private String idClient;
-  @Positive
+  @Positive(message = "Must be greater than 0")
   @NotNull(message = "Id hotel is mandatory")
   private Long idHotel;
   @Min(value = 1, message = "Min one day to make reservation")

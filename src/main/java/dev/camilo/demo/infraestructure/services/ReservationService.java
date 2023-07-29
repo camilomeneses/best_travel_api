@@ -8,7 +8,9 @@ import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.domain.repositories.ReservationRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IReservationService;
+import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
+import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,8 +37,9 @@ public class ReservationService implements IReservationService {
   private final CustomerRepository customerRepository;
   private final HotelRepository hotelRepository;
 
-  //componente inyectado
+  //componentes inyectados
   private final CustomerHelper customerHelper;
+  private final BlackListHelper blackListHelper;
 
   //crear nueva reservation
   /**
@@ -46,13 +49,14 @@ public class ReservationService implements IReservationService {
    */
   @Override
   public ReservationResponse create(ReservationRequest request) {
+    this.blackListHelper.isInBlackListCustomer(request.getIdClient());
     /*variables de entrada del request*/
     var hotel = hotelRepository
         .findById(request.getIdHotel())
-        .orElseThrow(() -> new IdNotFoundException("hotel"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
     var customer = customerRepository
         .findById(request.getIdClient())
-        .orElseThrow(() -> new IdNotFoundException("customer"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
 
     /*persistir en la base de datos*/
     var reservationToPersist = ReservationEntity.builder()
@@ -88,7 +92,7 @@ public class ReservationService implements IReservationService {
     /*variables de entrada del request*/
     var reservationFromDB = reservationRepository
         .findById(id)
-        .orElseThrow(() -> new IdNotFoundException("reservation"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.reservation.name()));
     return this.entityToResponse(reservationFromDB);
   }
 
@@ -104,12 +108,12 @@ public class ReservationService implements IReservationService {
     /*variables de entrada del request*/
     var hotel = hotelRepository
         .findById(request.getIdHotel())
-        .orElseThrow(() -> new IdNotFoundException("hotel"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
 
     /*actualizacion de valores en reservation*/
     var reservationToUpdate = reservationRepository
         .findById(id)
-        .orElseThrow(() -> new IdNotFoundException("reservation"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.reservation.name()));
 
     /*seteo de hotel en reservation*/
     reservationToUpdate.setHotel(hotel);
@@ -134,7 +138,7 @@ public class ReservationService implements IReservationService {
     /*variables de entrada del request*/
     var reservationToDelete = reservationRepository
         .findById(id)
-        .orElseThrow(() -> new IdNotFoundException("reservation"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.reservation.name()));
     /*reducir el contador de reservations en customer*/
     this.customerHelper.decrease(reservationToDelete.getCustomer().getDni(), ReservationService.class);
     this.reservationRepository.delete(reservationToDelete);
@@ -151,7 +155,7 @@ public class ReservationService implements IReservationService {
   public BigDecimal findPrice(Long hotelId) {
     var hotel = hotelRepository
         .findById(hotelId)
-        .orElseThrow(() -> new IdNotFoundException("hotel"));
+        .orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
     return hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
   }
 

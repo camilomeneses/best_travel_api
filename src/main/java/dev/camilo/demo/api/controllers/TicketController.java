@@ -4,6 +4,7 @@ import dev.camilo.demo.api.models.request.TicketRequest;
 import dev.camilo.demo.api.models.responses.FlyPriceResponse;
 import dev.camilo.demo.api.models.responses.TicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class TicketController {
   @PostMapping
   public ResponseEntity<TicketResponse> post(
       @RequestHeader("Content-Type") String contentType,
-      @RequestBody TicketRequest request)
+      @Valid @RequestBody TicketRequest request)
   {
     if (MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
       return ResponseEntity.ok()
@@ -79,7 +80,7 @@ public class TicketController {
   public ResponseEntity<TicketResponse> put(
       @RequestHeader("Content-Type") String contentType,
       @PathVariable UUID id,
-      @RequestBody TicketRequest request) {
+      @Valid @RequestBody TicketRequest request) {
     if (MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
       return ResponseEntity.ok()
           .contentType(MediaType.APPLICATION_JSON)
