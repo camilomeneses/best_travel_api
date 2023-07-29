@@ -4,6 +4,7 @@ import dev.camilo.demo.api.models.request.ReservationRequest;
 import dev.camilo.demo.api.models.responses.HotelPriceResponse;
 import dev.camilo.demo.api.models.responses.ReservationResponse;
 import dev.camilo.demo.infraestructure.abstract_services.IReservationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class ReservationController {
   @PostMapping
   public ResponseEntity<ReservationResponse> post(
       @RequestHeader("Content-Type") String contentType,
-      @RequestBody ReservationRequest request) {
+      @Valid @RequestBody ReservationRequest request) {
     if (MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
       return ResponseEntity.ok()
           .contentType(MediaType.APPLICATION_JSON).body(reservationService.create(request));
@@ -81,7 +82,7 @@ public class ReservationController {
   public ResponseEntity<ReservationResponse> put(
       @RequestHeader("Content-Type") String contentType,
       @PathVariable UUID id,
-      @RequestBody ReservationRequest request
+      @Valid @RequestBody ReservationRequest request
   ){
     if(MediaType.APPLICATION_JSON_VALUE.equals(contentType)){
       return ResponseEntity.ok()
