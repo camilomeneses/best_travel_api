@@ -13,15 +13,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * ControllerAdvice para interceptar un IdNotFoundException y responder
- * con una estructura de ErrorResponse el cual tiene
- * -
+ * con una estructura de ErrorResponse el cual tiene, identifica si el path
+ * tiene /xml/ o si el header Content-Type es application/json o application/xml
  */
 @RestControllerAdvice
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BadRequestController {
 
   @ExceptionHandler(IdNotFoundException.class)
-  public ResponseEntity<BaseErrorResponse> handleIdNotFound(IdNotFoundException exception, HttpServletRequest request) {
+  public ResponseEntity<BaseErrorResponse> handleIdNotFound(
+      IdNotFoundException exception,
+      HttpServletRequest request
+  ) {
+    String contentType = request.getContentType();
     String path = request.getRequestURI();
     /*verificar si el path contiene /xml/*/
     boolean isXmlRequest = path.contains("/xml/");
@@ -32,7 +36,7 @@ public class BadRequestController {
         .errorCode(HttpStatus.BAD_REQUEST.value())
         .build();
 
-    if (isXmlRequest) {
+    if (isXmlRequest || MediaType.APPLICATION_XML_VALUE.equals(contentType)) {
       /*Si es una solicitud XML, responder con formato XML*/
       return ResponseEntity.badRequest()
           .contentType(MediaType.APPLICATION_XML)
