@@ -75,3 +75,10 @@ CREATE TABLE ticket
     CONSTRAINT fk_fly_t FOREIGN KEY ( fly_id ) REFERENCES fly ( "id" ) ON DELETE NO ACTION,
     CONSTRAINT fk_tour_t FOREIGN KEY ( tour_id ) REFERENCES tour ( "id" ) ON DELETE CASCADE
 );
+
+CREATE TABLE currency_data (
+    id SERIAL PRIMARY KEY,
+    currency VARCHAR(10) NOT NULL,
+    price NUMERIC(18, 6) NOT NULL,
+    called_time TIMESTAMP NOT NULL
+);

@@ -31,80 +31,78 @@ public class FlyService implements IFlyService {
   private final FlyRepository flyRepository;
 
   //obtener vuelos paginados
+
   /**
    * Obtener vuelos con paginacion y ordenamiento
-   * @param page Integer
-   * @param size Integer
+   *
+   * @param page     Integer
+   * @param size     Integer
    * @param sortType Enum
    * @return DTO Response
    */
   @Override
   public Page<FlyResponse> readAll(Integer page, Integer size, SortType sortType) {
     PageRequest pageRequest = null;
-    switch (sortType){
-      case NONE -> pageRequest = PageRequest.of(page,size);
-      case LOWER -> pageRequest = PageRequest
-          .of(page,size, Sort.by(FIEL_BY_SORT).ascending());
-      case UPPER -> pageRequest = PageRequest
-          .of(page,size,Sort.by(FIEL_BY_SORT).descending());
+    switch (sortType) {
+      case NONE -> pageRequest = PageRequest.of(page, size);
+      case LOWER -> pageRequest = PageRequest.of(page, size, Sort.by(FIEL_BY_SORT).ascending());
+      case UPPER -> pageRequest = PageRequest.of(page, size, Sort.by(FIEL_BY_SORT).descending());
     }
     return this.flyRepository.findAll(pageRequest).map(this::entityToResponse);
   }
 
   //obtener vuelos de menor precio
+
   /**
    * Obtener los vuelos por debajo del precio
+   *
    * @param price BigDecimal
    * @return Set
    */
   @Override
   public Set<FlyResponse> readLessPrice(BigDecimal price) {
-    return this.flyRepository.selectLessPrice(price)
-        .stream()
-        .map(this::entityToResponse)
-        .collect(Collectors.toSet());
+    return this.flyRepository.selectLessPrice(price).stream().map(this::entityToResponse).collect(Collectors.toSet());
   }
 
   //obtener vuelos entre los precios
+
   /**
    * Obtener vuelos entre el precio min y max
+   *
    * @param min BigDecimal
    * @param max BigDecimal
    * @return Set
    */
   @Override
   public Set<FlyResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
-    return this.flyRepository.selectBetweenPrice(min,max)
-        .stream()
-        .map(this::entityToResponse)
-        .collect(Collectors.toSet());
+    return this.flyRepository.selectBetweenPrice(min, max).stream().map(this::entityToResponse).collect(Collectors.toSet());
   }
 
   //obtener vuelos de origen y destino
 
   /**
    * Obtener los vuelos correspondientes a los origenes y destinos
-   * @param origen String
+   *
+   * @param origen  String
    * @param destiny String
    * @return Set
    */
   @Override
   public Set<FlyResponse> readByOriginDestiny(String origen, String destiny) {
-    return this.flyRepository.selectOriginDestiny(origen,destiny)
-        .stream()
-        .map(this::entityToResponse)
-        .collect(Collectors.toSet());
+    return this.flyRepository.selectOriginDestiny(origen, destiny).stream().map(this::entityToResponse).collect(Collectors.toSet());
   }
 
   //Mapeo de entity a DTO Response
+
   /**
    * Metodo para mapear y convertir una entidad en el DTO response
+   *
    * @param entity Fly
    * @return DTO FlyResponse
    */
-  private FlyResponse entityToResponse(FlyEntity entity){
+  private FlyResponse entityToResponse(FlyEntity entity) {
     FlyResponse response = new FlyResponse();
-    BeanUtils.copyProperties(entity,response);
+    BeanUtils.copyProperties(entity, response);
     return response;
   }
 }

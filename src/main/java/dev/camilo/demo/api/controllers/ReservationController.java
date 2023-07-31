@@ -158,7 +158,7 @@ public class ReservationController {
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<HotelPriceResponse> getHotelPriceJson(
       @RequestParam Long hotelId
-  ) {
+      ) {
     return getHotelPrice(hotelId);
   }
 
