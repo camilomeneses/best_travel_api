@@ -19,6 +19,9 @@ import java.io.Serializable;
 @Builder
 @JacksonXmlRootElement(localName = "flights")
 public class TourFlyRequest implements Serializable {
+  /**
+   * id de fly
+   */
   @Positive(message = "Must be greater than 0")
   @NotNull(message = "Id is mandatory")
   public Long id;

@@ -8,6 +8,10 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
+/**
+ * Clase de error para manejo de errores, se usa para dar un grupo de
+ * mensajes de error en el ControllerAdvice, hereda atributos de BaseErrorResponse
+ */
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 @Data

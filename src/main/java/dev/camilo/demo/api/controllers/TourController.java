@@ -5,6 +5,8 @@ import dev.camilo.demo.api.models.responses.TourReservationResponse;
 import dev.camilo.demo.api.models.responses.TourResponse;
 import dev.camilo.demo.api.models.responses.TourTicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITourService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import java.util.UUID;
 /**
  * Controller REST para respuestas JSON y XML para tour
  */
+@Tag(name = "Reservation")
 @RestController
 @RequestMapping(path = "tour")
 @RequiredArgsConstructor
@@ -25,7 +28,6 @@ public class TourController {
   private final ITourService tourService;
 
   //crear tour JSON y XML
-
   /**
    * Metodo para crear un tour, regresa un JSON o XML segun
    * el Content-Type del Header
@@ -34,6 +36,10 @@ public class TourController {
    * @param request TourRequest
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "crear tour JSON y XML",
+      description = "Metodo para crear un tour, regresa un JSON o XML segun el Content-Type del Header"
+  )
   @PostMapping
   public ResponseEntity<TourResponse> post(
       @RequestHeader("Content-Type") String contentType,
@@ -57,6 +63,10 @@ public class TourController {
    * @param id Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "obtener tour por id JSON",
+      description = "Obtener tour por su id, response en formato JSON"
+  )
   @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TourResponse> getJson(@PathVariable Long id) {
     return ResponseEntity.ok(this.tourService.read(id));
@@ -68,6 +78,10 @@ public class TourController {
    * @param id Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "obtener tour por id XML",
+      description = "Obtener tour por su id, response en formato XML"
+  )
   @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<TourResponse> getXml(@PathVariable Long id) {
     return ResponseEntity.ok(this.tourService.read(id));
@@ -79,6 +93,10 @@ public class TourController {
    * @param id Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "eliminar tour por id",
+      description = "Eliminar tour por id"
+  )
   @DeleteMapping(path = "{id}")
   public ResponseEntity<Void> delete(@PathVariable Long id){
     this.tourService.delete(id);
@@ -92,6 +110,10 @@ public class TourController {
    * @param ticketId UUID
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "eliminar ticket de tour",
+      description = "Eliminar ticket de tour"
+  )
   @PatchMapping(path = "{tourId}/remove_ticket/{ticketId}")
   public ResponseEntity<Void> deleteTicket(
       @PathVariable Long tourId,
@@ -109,6 +131,10 @@ public class TourController {
    * @param flyId Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "agregar ticket a tour JSON",
+      description = "Metodo para agregar el ticket a el tour, response formato JSON"
+  )
   @PatchMapping(path = "{tourId}/add_ticket/{flyId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TourTicketResponse> addTicketJson(
       @PathVariable Long tourId,
@@ -126,6 +152,10 @@ public class TourController {
    * @param flyId Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "agregar ticket a tour XML",
+      description = "Metodo para agregar el ticket a el tour, response formato XML"
+  )
   @PatchMapping(path = "/xml/{tourId}/add_ticket/{flyId}", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<TourTicketResponse> addTicketXml(
       @PathVariable Long tourId,
@@ -142,6 +172,10 @@ public class TourController {
    * @param reservationId UUID
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "agregar ticket a tour XML",
+      description = "Metodo para eliminar una reservation de un tour"
+  )
   @PatchMapping(path = "{tourId}/remove_reservation/{reservationId}")
   public ResponseEntity<Void> deleteReservation(
       @PathVariable Long tourId,
@@ -160,6 +194,10 @@ public class TourController {
    * @param totalDays Integer
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "agregar reservation a tour JSON",
+      description = "Agregar una reservation a tour, response formato JSON"
+  )
   @PatchMapping(path = "{tourId}/add_reservation/{hotelId}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TourReservationResponse> addReservationJson(
       @PathVariable Long tourId,
@@ -179,6 +217,10 @@ public class TourController {
    * @param totalDays Integer
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "agregar reservation a tour XML",
+      description = "Agregar una reservation a tour, response formato XML"
+  )
   @PatchMapping(path = "/xml/{tourId}/add_reservation/{hotelId}", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<TourReservationResponse> addReservationXml(
       @PathVariable Long tourId,

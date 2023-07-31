@@ -16,5 +16,8 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FlyPriceResponse implements Serializable {
+  /**
+   * precio de vuelo
+   */
   private BigDecimal flyPrice;
 }

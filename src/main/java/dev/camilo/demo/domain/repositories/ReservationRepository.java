@@ -4,6 +4,8 @@ import dev.camilo.demo.domain.entities.ReservationEntity;
 import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 
-
+/**
+ * Acceso a datos en la tabla reservation
+ */
 public interface ReservationRepository extends CrudRepository<ReservationEntity, UUID> {
 }

@@ -16,9 +16,24 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class HotelResponse implements Serializable {
+  /**
+   * id de hotel
+   */
   private Long id;
+  /**
+   * nombre de hotel
+   */
   private String name;
+  /**
+   * direccion de hotel
+   */
   private String address;
+  /**
+   * puntuacion de hotel
+   */
   private Integer rating;
+  /**
+   * precio de hotel
+   */
   private BigDecimal price;
 }

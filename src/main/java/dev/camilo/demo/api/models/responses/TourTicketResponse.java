@@ -13,5 +13,8 @@ import java.util.UUID;
 @Data
 @Builder
 public class TourTicketResponse implements Serializable {
+  /**
+   * id de ticket
+   */
   private UUID ticketId;
 }

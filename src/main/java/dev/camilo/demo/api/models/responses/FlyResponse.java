@@ -17,13 +17,40 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class FlyResponse implements Serializable {
+  /**
+   * id de vuelo
+   */
   private Long id;
+  /**
+   * coordenadas origen latitud
+   */
   private Double originLat;
+  /**
+   * coordenadas origen longitud
+   */
   private Double originLng;
+  /**
+   * coordenadas destino latitud
+   */
   private Double destinyLat;
+  /**
+   * coordenadas destino longitud
+   */
   private Double destinyLng;
+  /**
+   * nombre de origen
+   */
   private String originName;
+  /**
+   * nombre de destino
+   */
   private String destinyName;
+  /**
+   * precio del vuelo
+   */
   private BigDecimal price;
+  /**
+   * nombre de aerolinea
+   */
   private AeroLine aeroLine;
 }

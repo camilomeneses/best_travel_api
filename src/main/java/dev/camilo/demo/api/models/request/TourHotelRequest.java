@@ -21,9 +21,15 @@ import java.io.Serializable;
 @Builder
 @JacksonXmlRootElement(localName = "hotels")
 public class TourHotelRequest implements Serializable {
+  /**
+   * id de hotel
+   */
   @Positive(message = "Must be greater than 0")
   @NotNull(message = "Id is mandatory")
   public Long id;
+  /**
+   * numero de dias a revervar hotel
+   */
   @Min(value = 1, message = "Min one day to make reservation")
   @Max(value = 30, message = "Max 30 days to make reservation")
   @NotNull(message = "Total days is mandatory")

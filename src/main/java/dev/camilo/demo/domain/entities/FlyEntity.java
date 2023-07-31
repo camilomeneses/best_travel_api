@@ -7,6 +7,21 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
+/**
+ * Entidad Fly
+ *
+ *  <ul>
+ *    <li><b>id</b> Double</li>
+ *    <li><b>originLat</b> Double</li>
+ *    <li><b>originLng</b> Double</li>
+ *    <li><b>destinyLat</b> Double</li>
+ *    <li><b>destinyLng</b> Double</li>
+ *    <li><b>originName</b> String</li>
+ *    <li><b>destinyName</b> String</li>
+ *    <li><b>aeroLine</b> Enum</li>
+ *    <li><b>tickets</b> Set de TicketEntity <small>(relacion inversa)</small></li>
+ *  </ul>
+ */
 @Entity(name = "fly")
 @NoArgsConstructor
 @Data

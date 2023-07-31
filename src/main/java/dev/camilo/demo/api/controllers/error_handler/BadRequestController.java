@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.ArrayList;
 
 /**
- * ControllerAdvice para interceptar un IdNotFoundException y responder
+ * ControllerAdvice para interceptar un IdNotFoundException y MethodArgumentNotValidException para responder
  * con una estructura de ErrorResponse el cual tiene, identifica si el path
  * tiene /xml/ o si el header Content-Type es application/json o application/xml
  */
@@ -24,6 +24,13 @@ import java.util.ArrayList;
 @ResponseStatus(code = HttpStatus.BAD_REQUEST)
 public class BadRequestController {
 
+  /**
+   * Metodo para recuperar IdNotFoundException y llevarlo a la respuesta del
+   * controlador, se identifica si la respuesta debe ser JSON o XML
+   * @param exception IdNotFoundExeption
+   * @param request HttpServletRequest
+   * @return ResponseEntity
+   */
   @ExceptionHandler(IdNotFoundException.class)
   public ResponseEntity<BaseErrorResponse> handleIdNotFound(
       IdNotFoundException exception,
@@ -54,6 +61,14 @@ public class BadRequestController {
     }
   }
 
+  /**
+   * Metodo para recuperar MethodArgumentNotValidException y llevarlo a la respuesta del
+   * controlador,este tiene un grupo de errores,
+   * se identifica si la respuesta debe ser JSON o XML
+   * @param exception IdNotFoundExeption
+   * @param request HttpServletRequest
+   * @return ResponseEntity
+   */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<BaseErrorResponse> handleIdNotFound(
       MethodArgumentNotValidException exception,

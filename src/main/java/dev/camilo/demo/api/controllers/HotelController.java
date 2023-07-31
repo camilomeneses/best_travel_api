@@ -3,6 +3,8 @@ package dev.camilo.demo.api.controllers;
 import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
 import dev.camilo.demo.util.enums.SortType;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -13,6 +15,10 @@ import java.math.BigDecimal;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * Controller REST para respuestas JSON y XML para hotel
+ */
+@Tag(name = "Hotel")
 @RestController
 @RequestMapping(path = "hotel")
 @RequiredArgsConstructor
@@ -31,6 +37,10 @@ public class HotelController {
    * @param sortType Enum
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener todos los hoteles paginados y ordenados JSON",
+      description = "Obtener los hoteles paginados y ordenados"
+  )
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Page<HotelResponse>> getAllJson(
       @RequestParam Integer page,
@@ -50,6 +60,10 @@ public class HotelController {
    * @param sortType Enum
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener todos los hoteles paginados y ordenados XML",
+      description = "Obtener los hoteles paginados y ordenados"
+  )
   @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<Page<HotelResponse>> getAllXml(
       @RequestParam Integer page,
@@ -68,6 +82,11 @@ public class HotelController {
    * @param price BigDecimal
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener hoteles menores al precio JSON",
+      description = "Obtener los hoteles menores al precio del parametro,\n" +
+          "   response en formato JSON"
+  )
   @GetMapping(path = "/less_price", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Set<HotelResponse>> getLessPriceJson(
       @RequestParam BigDecimal price
@@ -84,6 +103,11 @@ public class HotelController {
    * @param price BigDecimal
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener hoteles menores al precio XML",
+      description = "Obtener los hoteles menores al precio del parametro,\n" +
+          "   response en formato XML"
+  )
   @GetMapping(path = "/xml/less_price", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<Set<HotelResponse>> getLessPriceXml(
       @RequestParam BigDecimal price
@@ -101,6 +125,11 @@ public class HotelController {
    * @param max BigDecimal
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener hoteles entre los precios JSON",
+      description = "Obtener los hoteles con precios entre el min y el max precio,\n" +
+          "   response formato JSON"
+  )
   @GetMapping(path = "/between_price", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Set<HotelResponse>> getBetweenPriceJson(
       @RequestParam BigDecimal min,
@@ -119,6 +148,11 @@ public class HotelController {
    * @param max BigDecimal
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener hoteles entre los precios XML",
+      description = "Obtener los hoteles con precios entre el min y el max precio,\n" +
+          "   response formato XML"
+  )
   @GetMapping(path = "/xml/between_price", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<Set<HotelResponse>> getBetweenPriceXml(
       @RequestParam BigDecimal min,
@@ -136,6 +170,11 @@ public class HotelController {
    * @param rating Integer
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener hoteles menores al precio JSON",
+      description = "Obtener los hoteles con rating mayor al parametro,\n" +
+          "   response en formato JSON"
+  )
   @GetMapping(path = "/greater_rating", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Set<HotelResponse>> getGreaterThanRatingJson(
       @RequestParam Integer rating
@@ -155,6 +194,11 @@ public class HotelController {
    * @param rating Integer
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "Obtener hoteles menores al precio XML",
+      description = "Obtener los hoteles con rating mayor al parametro,\n" +
+          "   response en formato XML"
+  )
   @GetMapping(path = "/xml/greater_rating", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<Set<HotelResponse>> getGreaterThanRatingXml(
       @RequestParam Integer rating

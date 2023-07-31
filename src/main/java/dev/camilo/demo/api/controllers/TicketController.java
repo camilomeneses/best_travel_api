@@ -4,6 +4,8 @@ import dev.camilo.demo.api.models.request.TicketRequest;
 import dev.camilo.demo.api.models.responses.FlyPriceResponse;
 import dev.camilo.demo.api.models.responses.TicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -16,6 +18,7 @@ import java.util.UUID;
 /**
  * Controller REST para respuestas JSON y XML para ticket
  */
+@Tag(name = "Ticket")
 @RestController
 @RequestMapping(path = "ticket")
 @RequiredArgsConstructor
@@ -31,6 +34,10 @@ public class TicketController {
    * @param request TicketRequest
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "crear un ticket JSON y XML",
+      description = "Accion POST para crear una nuevo ticket"
+  )
   @PostMapping
   public ResponseEntity<TicketResponse> post(
       @RequestHeader("Content-Type") String contentType,
@@ -52,6 +59,10 @@ public class TicketController {
    * @param id UUID
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "leer un ticket JSON",
+      description = "Accion GET para obtener ticket en formato JSON"
+  )
   @GetMapping(path = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<TicketResponse> getJson(@PathVariable UUID id) {
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(ticketService.read(id));
@@ -63,6 +74,10 @@ public class TicketController {
    * @param id UUID
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "leer un ticket XML",
+      description = "Accion GET para obtener ticket en formato XML"
+  )
   @GetMapping(path = "/xml/{id}", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<TicketResponse> getXml(@PathVariable UUID id) {
     return ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(ticketService.read(id));
@@ -76,6 +91,10 @@ public class TicketController {
    * @param request TicketRequest
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "actualizar ticket JSON y XML",
+      description = "Accion PUT para actualizar un ticket"
+  )
   @PutMapping(path = "{id}")
   public ResponseEntity<TicketResponse> put(
       @RequestHeader("Content-Type") String contentType,
@@ -99,6 +118,10 @@ public class TicketController {
    * @param id UUID
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "eliminar ticket JSON y XML",
+      description = "Accion DELETE para eliminar un ticket"
+  )
   @DeleteMapping(path = "{id}")
   public ResponseEntity<Void> delete(@PathVariable UUID id) {
     this.ticketService.delete(id);
@@ -112,6 +135,10 @@ public class TicketController {
    * @param flyId Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "obtener precio de vuelo para ticket JSON",
+      description = "Accion GET para obtener el precio de un ticket segun el precio del vuelo a tomar, respuesta en JSON"
+  )
   @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<FlyPriceResponse> getFlyPriceJson(
       @RequestParam Long flyId
@@ -126,6 +153,10 @@ public class TicketController {
    * @param flyId Long
    * @return ResponseEntity
    */
+  @Operation(
+      summary = "obtener precio de vuelo para ticket XML",
+      description = "Accion GET para obtener el precio de un ticket segun el precio del vuelo a tomar, respuesta en XML"
+  )
   @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<FlyPriceResponse> getFlyPriceXml(
       @RequestParam Long flyId

@@ -17,7 +17,8 @@ public class CustomerHelper {
   private final CustomerRepository customerRepository;
 
   /**
-   * Metodo para aumentar y disminuir el contador de vuelos, reservations y tours
+   * Metodo para aumentar y disminuir el contador de vuelos, reservations y tours por cada
+   * customer
    *
    * @param customerId String
    * @param type       Class
@@ -34,6 +35,11 @@ public class CustomerHelper {
     this.customerRepository.save(customerToUpdate);
   }
 
+  /**
+   * Metodo para disminuir el contador de vuelos, reservations y tours por cada customer
+   * @param customerId String
+   * @param type Class
+   */
   public void decrease(String customerId, Class<?> type) {
 
     var customerToUpdate = this.customerRepository.findById(customerId).orElseThrow();

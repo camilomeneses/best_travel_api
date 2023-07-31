@@ -17,7 +17,16 @@ import java.util.UUID;
 @Data
 @Builder
 public class TourResponse implements Serializable {
+  /**
+   * id de tour
+   */
   private Long id;
+  /**
+   * conjunto de ticketes de vuelo de tour
+   */
   private Set<UUID> ticketsIds;
+  /**
+   * conjunto de reservaciones de hoteles de tour
+   */
   private Set<UUID> reservationIds;
 }

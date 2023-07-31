@@ -11,10 +11,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
 
+/**
+ * Clase de Inicio a la aplicacion
+ */
 @SpringBootApplication
 @Slf4j
 public class DemoApplication {
 
+  /**
+   * Metodo de Inicio a la aplicacion
+   * @param args String[]
+   */
   public static void main(String[] args) {
     SpringApplication.run(DemoApplication.class, args);
   }

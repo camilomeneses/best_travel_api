@@ -8,6 +8,16 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * Entidad Customer
+ *
+ *  <ul>
+ *    <li><b>id</b> Long</li>
+ *    <li><b>reservations</b> Set de ReservationEntity <small>(relacion inversa)</small></li>
+ *    <li><b>tickets</b> Set de TicketEntity <small>(relacion inversa)</small></li>
+ *    <li><b>customer</b> Set de Customer <small>(relacion inversa)</small></li>
+ *  </ul>
+ */
 @Entity(name = "tour")
 @NoArgsConstructor
 @Data
@@ -63,7 +73,7 @@ public class TourEntity {
    * Agregar ticket a el HashSet de tickets, se hace relacion inversa
    * para agregar el id_tour a cada ticket correspondiente (llave foranea)
    *
-   * @param ticket
+   * @param ticket TickerEntity
    */
   public void addTicket(TicketEntity ticket) {
     if (Objects.isNull(this.tickets)) this.tickets = new HashSet<>();
@@ -90,7 +100,7 @@ public class TourEntity {
    * Agregar reservation a el HashSet de reservations, se hace relacion inversa
    * para agregar el id_tour a cada reservation correspondiente (llave foranea)
    *
-   * @param reservation
+   * @param reservation ReservationEntity
    */
   public void addReservation(ReservationEntity reservation) {
     if (Objects.isNull(this.reservations)) this.reservations = new HashSet<>();

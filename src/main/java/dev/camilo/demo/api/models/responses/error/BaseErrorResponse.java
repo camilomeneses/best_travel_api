@@ -7,6 +7,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
+/**
+ * Clase Base para modelo de respuesta en controller para los handler de error
+ */
 @SuperBuilder
 @Data
 @AllArgsConstructor

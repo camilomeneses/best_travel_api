@@ -36,5 +36,11 @@ public interface CatalogService <ResponseObj>{
   Set<ResponseObj> readBetweenPrices(BigDecimal min, BigDecimal max);
 
   //contantes
+  /**
+   * Campo a ordenar para uso de los metodos
+   * - readAll
+   * - readLessPrice
+   * - readBetweenPrices
+   */
   String FIEL_BY_SORT = "price";
 }

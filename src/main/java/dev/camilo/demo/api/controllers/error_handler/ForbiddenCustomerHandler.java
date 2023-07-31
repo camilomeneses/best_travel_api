@@ -12,12 +12,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- *
+ * ControllerAdvice para interceptar un ForbiddenCustomerException y responder
+ * con una estructura de ErrorResponse el cual tiene, identifica si el path
+ * tiene /xml/ o si el header Content-Type es application/json o application/xml
  */
 @RestControllerAdvice
 @ResponseStatus(code = HttpStatus.FORBIDDEN)
 public class ForbiddenCustomerHandler {
 
+  /**
+   * Metodo para recuperar ForbiddenCustomerException y llevarlo a la respuesta del
+   * controlador, se identifica si la respuesta debe ser JSON o XML
+   * @param exception ForbiddenCustomerException
+   * @param request HttpServletRequest
+   * @return ResponseEntity
+   */
   @ExceptionHandler(ForbiddenCustomerException.class)
   public ResponseEntity<BaseErrorResponse> handleIdNotFound(
       ForbiddenCustomerException exception,

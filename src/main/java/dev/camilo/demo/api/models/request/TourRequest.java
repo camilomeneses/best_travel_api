@@ -20,11 +20,20 @@ import java.util.Set;
 @Builder
 @JacksonXmlRootElement(localName = "TourRequest")
 public class TourRequest implements Serializable {
+  /**
+   * id de customer
+   */
   @Size(min = 10,max = 20, message = "The size have to a length between 18 and 20 characters")
   @NotBlank(message = "Id customer is mandatory")
   public String customerId;
+  /**
+   * vuelos a vincular a tour del customer
+   */
   @Size(min=1, message = "Min flight tour per tour")
   private Set<TourFlyRequest> flights;
+  /**
+   * hoteles a vincular a tour de customer
+   */
   @Size(min=1, message = "Min hotel tour per tour")
   private Set<TourHotelRequest> hotels;
 }

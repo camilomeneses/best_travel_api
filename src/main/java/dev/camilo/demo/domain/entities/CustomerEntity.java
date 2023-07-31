@@ -5,6 +5,22 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * Entidad Customer
+ *
+ *  <ul>
+ *    <li><b>dni</b> String</li>
+ *    <li><b>fullName</b> String</li>
+ *    <li><b>creditCard</b> String</li>
+ *    <li><b>phoneNumber</b> String</li>
+ *    <li><b>totalFlights</b> Integer</li>
+ *    <li><b>totalLodgings</b> Integer</li>
+ *    <li><b>totalTours</b> Integer</li>
+ *    <li><b>tour</b> Set de TourEntity <small>(relacion inversa)</small></li>
+ *    <li><b>reservations</b> Set de ReservationEntity <small>(relacion inversa)</small></li>
+ *    <li><b>tickets</b> Set de TicketEntity <small>(relacion inversa)</small></li>
+ *  </ul>
+ */
 @Entity(name = "customer")
 @NoArgsConstructor
 @Data

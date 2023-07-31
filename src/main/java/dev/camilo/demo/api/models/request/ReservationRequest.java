@@ -16,16 +16,28 @@ import java.io.Serializable;
 @Data
 @Builder
 public class ReservationRequest implements Serializable {
+  /**
+   * id de customer
+   */
   @Size(min = 10,max = 20, message = "The size have to a length between 18 and 20 characters")
   @NotBlank(message = "Id client is mandatory")
   private String idClient;
+  /**
+   * id de hotel
+   */
   @Positive(message = "Must be greater than 0")
   @NotNull(message = "Id hotel is mandatory")
   private Long idHotel;
+  /**
+   * numero de dias a reservar
+   */
   @Min(value = 1, message = "Min one day to make reservation")
   @Max(value = 30, message = "Max 30 days to make reservation")
   @NotNull(message = "Total days is mandatory")
   private Integer totalDays;
+  /**
+   * email de customer
+   */
   @Email(message = "Invalid email")
   private String email;
 }

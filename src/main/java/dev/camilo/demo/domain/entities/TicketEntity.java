@@ -11,6 +11,20 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Entidad Customer
+ *
+ *  <ul>
+ *    <li><b>id</b> UUID</li>
+ *    <li><b>departureDate</b> LocalDateTime</li>
+ *    <li><b>arrivalDate</b> LocalDateTime</li>
+ *    <li><b>purchaseDate</b> LocalDate</li>
+ *    <li><b>price</b> BigDecimal</li>
+ *    <li><b>tour</b> Set de TourEntity <small>(llave foranea)</small></li>
+ *    <li><b>fly</b> Set de FlyEntity <small>(llave foranea)</small></li>
+ *    <li><b>customer</b> Set de CustomerEntity <small>(llave foranea)</small></li>
+ *  </ul>
+ */
 @Entity(name = "ticket")
 @NoArgsConstructor
 @Data

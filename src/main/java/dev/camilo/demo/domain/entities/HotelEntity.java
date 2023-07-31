@@ -6,6 +6,18 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.Set;
 
+/**
+ * Entidad Hotel
+ *
+ *  <ul>
+ *    <li><b>id</b> Long</li>
+ *    <li><b>name</b> String</li>
+ *    <li><b>address</b> String</li>
+ *    <li><b>rating</b> Integer</li>
+ *    <li><b>price</b> BigDecimal</li>
+ *    <li><b>reservations</b> Set de ReservationEntity <small>(relacion inversa)</small></li>
+ *  </ul>
+ */
 @Entity(name = "hotel")
 @NoArgsConstructor
 @Data
