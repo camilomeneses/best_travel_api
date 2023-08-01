@@ -93,14 +93,14 @@ public class ApiCurrencyConnectorHelper {
 
       if (byCurrency != null) {
         // Si existe, actualizamos los campos necesarios
-        byCurrency.setPrice(price.doubleValue());
+        byCurrency.setPrice(price);
         byCurrency.setCalledTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault()));
         currencyRepository.save(byCurrency);
       } else {
         // Si no existe, creamos un nuevo registro
         CurrencyEntity currencyEntity = CurrencyEntity.builder()
             .currency(currencyCode)
-            .price(price.doubleValue())
+            .price(price)
             .calledTime(LocalDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.systemDefault()))
             .build();
         currencyRepository.save(currencyEntity);

@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
@@ -35,7 +37,7 @@ public class CurrencyEntity {
    * precio de la divisa comparada con 1 USD
    */
   @Column(name = "price")
-  private double price;
+  private BigDecimal price;
 
   /**
    * ultima hora de actualizacion

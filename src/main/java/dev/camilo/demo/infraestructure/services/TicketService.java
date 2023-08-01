@@ -3,12 +3,15 @@ package dev.camilo.demo.infraestructure.services;
 import dev.camilo.demo.api.models.request.TicketRequest;
 import dev.camilo.demo.api.models.responses.FlyResponse;
 import dev.camilo.demo.api.models.responses.TicketResponse;
+import dev.camilo.demo.domain.entities.CurrencyEntity;
 import dev.camilo.demo.domain.entities.TicketEntity;
+import dev.camilo.demo.domain.repositories.CurrencyRepository;
 import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.TicketRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
 import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
+import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.util.BestTravelUtil;
 import dev.camilo.demo.util.enums.Tables;
@@ -21,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -40,6 +45,7 @@ public class TicketService implements ITicketService {
   //componentes inyectados
   private final CustomerHelper customerHelper;
   private final BlackListHelper blackListHelper;
+  private final CurrencyHelper currencyHelper;
 
   //crear nuevo ticket
   /**
@@ -149,11 +155,16 @@ public class TicketService implements ITicketService {
    * @return BigDecimal
    */
   @Override
-  public BigDecimal findPrice(Long flyId) {
+  public BigDecimal findPrice(Long flyId, Locale customerLocale) {
     var fly = this.flyRepository
         .findById(flyId)
         .orElseThrow(() -> new IdNotFoundException(Tables.fly.name()));
-    return fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+    /*Obtener precio de divisa del usuario*/
+    CurrencyEntity customerCurrencyEntity = currencyHelper
+        .getCurrencyEntity(customerLocale);
+    return fly.getPrice()
+        .add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)) //agregar 25% al valor
+        .multiply(customerCurrencyEntity.getPrice()); //convertir a moneda local
   }
 
   //mapeo de Entity a DTOResponse

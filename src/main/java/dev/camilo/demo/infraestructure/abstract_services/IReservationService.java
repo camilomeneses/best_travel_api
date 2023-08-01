@@ -4,6 +4,7 @@ import dev.camilo.demo.api.models.request.ReservationRequest;
 import dev.camilo.demo.api.models.responses.ReservationResponse;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -16,5 +17,5 @@ public interface IReservationService extends CrudService<ReservationRequest, Res
    * @param hotelId Long
    * @return BigDecimal
    */
-  BigDecimal findPrice(Long hotelId);
+  BigDecimal findPrice(Long hotelId, Locale customerLocale);
 }

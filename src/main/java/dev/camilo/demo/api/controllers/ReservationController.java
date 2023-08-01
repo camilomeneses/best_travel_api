@@ -6,6 +6,7 @@ import dev.camilo.demo.api.models.responses.ReservationResponse;
 import dev.camilo.demo.infraestructure.abstract_services.IReservationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -157,9 +159,10 @@ public class ReservationController {
   )
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<HotelPriceResponse> getHotelPriceJson(
-      @RequestParam Long hotelId
+      @RequestParam Long hotelId,
+      HttpServletRequest request
       ) {
-    return getHotelPrice(hotelId);
+    return getHotelPrice(hotelId, request.getLocale());
   }
 
   //obtener precio de hotel para reservation XML
@@ -178,22 +181,24 @@ public class ReservationController {
   )
   @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<HotelPriceResponse> getHotelPriceXml(
-      @RequestParam Long hotelId
+      @RequestParam Long hotelId,
+      HttpServletRequest request
   ) {
-    return getHotelPrice(hotelId);
+    return getHotelPrice(hotelId, request.getLocale());
   }
 
 
   //private methods
 
   /**
-   * Metodo para traer el precio del hotel de la reservation realizada
+   * Metodo para traer el precio del hotel de la reservation realizada segun la moneda
+   * local del customer
    *
    * @param hotelId Long
    * @return ResponseEntity
    */
-  private ResponseEntity<HotelPriceResponse> getHotelPrice(Long hotelId) {
-    BigDecimal hotelPrice = reservationService.findPrice(hotelId);
+  private ResponseEntity<HotelPriceResponse> getHotelPrice(Long hotelId, Locale customerLocale) {
+    BigDecimal hotelPrice = reservationService.findPrice(hotelId, customerLocale);
 
     /*Crear una clase HotelPriceResponse para representar la respuesta en JSON y XML*/
     HotelPriceResponse response = new HotelPriceResponse(hotelPrice);

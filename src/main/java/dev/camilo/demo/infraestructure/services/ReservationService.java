@@ -3,12 +3,15 @@ package dev.camilo.demo.infraestructure.services;
 import dev.camilo.demo.api.models.request.ReservationRequest;
 import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.api.models.responses.ReservationResponse;
+import dev.camilo.demo.domain.entities.CurrencyEntity;
 import dev.camilo.demo.domain.entities.ReservationEntity;
+import dev.camilo.demo.domain.repositories.CurrencyRepository;
 import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.domain.repositories.ReservationRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IReservationService;
 import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
+import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
@@ -21,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Currency;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -40,6 +45,7 @@ public class ReservationService implements IReservationService {
   //componentes inyectados
   private final CustomerHelper customerHelper;
   private final BlackListHelper blackListHelper;
+  private final CurrencyHelper currencyHelper;
 
   //crear nueva reservation
   /**
@@ -152,12 +158,17 @@ public class ReservationService implements IReservationService {
    * @return BigDecimal
    */
   @Override
-  public BigDecimal findPrice(Long hotelId) {
+  public BigDecimal findPrice(Long hotelId, Locale customerLocale) {
     var hotel = hotelRepository
         .findById(hotelId)
         .orElseThrow(() -> new IdNotFoundException(Tables.hotel.name()));
-    return hotel.getPrice().add(hotel.getPrice().multiply(CHARGES_PRICE_PERCENTAGE));
+    /*Obtener precio de divisa del usuario*/
+    CurrencyEntity customerCurrencyEntity = currencyHelper
+        .getCurrencyEntity(customerLocale);
+    /*devolver el precio del hotel en el valor de la divisa local del customer*/
+    return hotel.getPrice().multiply(customerCurrencyEntity.getPrice());
   }
+
 
   //mapeo de Entity a DTOResponse
   /**

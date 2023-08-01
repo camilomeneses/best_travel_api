@@ -6,6 +6,7 @@ import dev.camilo.demo.api.models.responses.TicketResponse;
 import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -141,9 +143,10 @@ public class TicketController {
   )
   @GetMapping( produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<FlyPriceResponse> getFlyPriceJson(
-      @RequestParam Long flyId
+      @RequestParam Long flyId,
+      HttpServletRequest request
   ) {
-    return getFlyPrice(flyId);
+    return getFlyPrice(flyId, request.getLocale());
   }
 
   //obtener precio de vuelo para ticket XML
@@ -159,9 +162,10 @@ public class TicketController {
   )
   @GetMapping(path = "/xml", produces = MediaType.APPLICATION_XML_VALUE)
   public ResponseEntity<FlyPriceResponse> getFlyPriceXml(
-      @RequestParam Long flyId
+      @RequestParam Long flyId,
+      HttpServletRequest request
   ) {
-    return getFlyPrice(flyId);
+    return getFlyPrice(flyId, request.getLocale());
   }
 
   //private methods
@@ -170,8 +174,8 @@ public class TicketController {
    * @param flyId Long
    * @return ResponseEntity
    */
-  private ResponseEntity<FlyPriceResponse> getFlyPrice(Long flyId) {
-    BigDecimal flyPrice = ticketService.findPrice(flyId);
+  private ResponseEntity<FlyPriceResponse> getFlyPrice(Long flyId, Locale customerLocale) {
+    BigDecimal flyPrice = ticketService.findPrice(flyId, customerLocale);
 
     /* Crear una clase FlyPriceResponse para representar la respuesta en JSON y XML*/
     FlyPriceResponse response = new FlyPriceResponse(flyPrice);

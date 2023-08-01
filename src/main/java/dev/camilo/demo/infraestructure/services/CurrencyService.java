@@ -21,11 +21,11 @@ public class CurrencyService {
    * verificar ultima hora de actualizacion despues de
    * arrancar la aplicacion y actualizar si es necesario
    */
-  @PostConstruct
+  /*@PostConstruct
   public void init() {
     log.info(" -- -- verificando ultima hora de actualizacion de currency_data  -- -- ");
     currencyConnectorHelper.updateCurrencyDataIfNeeded();
-  }
+  }*/
 
   /**
    * cada quince minutos verificar si ha pasado una hora de la hora de

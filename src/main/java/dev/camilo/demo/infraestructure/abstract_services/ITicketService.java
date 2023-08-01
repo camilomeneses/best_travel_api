@@ -4,6 +4,7 @@ import dev.camilo.demo.api.models.request.TicketRequest;
 import dev.camilo.demo.api.models.responses.TicketResponse;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -16,5 +17,5 @@ public interface ITicketService extends CrudService<TicketRequest, TicketRespons
    * @param flyId Long
    * @return BigDecimal
    */
-  BigDecimal findPrice(Long flyId);
+  BigDecimal findPrice(Long flyId, Locale customerLocale);
 }
