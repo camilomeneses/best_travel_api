@@ -13,6 +13,7 @@ import dev.camilo.demo.infraestructure.abstract_services.IReservationService;
 import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
+import dev.camilo.demo.infraestructure.helpers.EmailHelper;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -46,6 +48,7 @@ public class ReservationService implements IReservationService {
   private final CustomerHelper customerHelper;
   private final BlackListHelper blackListHelper;
   private final CurrencyHelper currencyHelper;
+  private final EmailHelper emailHelper;
 
   //crear nueva reservation
   /**
@@ -82,6 +85,11 @@ public class ReservationService implements IReservationService {
 
     /*incremetar contador de reservaciones para customer*/
     this.customerHelper.increase(customer.getDni(), ReservationService.class);
+
+    /*verificar si viene un email en la request, si viene entonces enviar mail de reservation
+    * exitosa*/
+    if(Objects.nonNull(request.getEmail()))
+      this.emailHelper.sendMail(request.getEmail(),customer.getFullName(),Tables.reservation.name());
 
     return this.entityToResponse(reservationPersisted);
   }

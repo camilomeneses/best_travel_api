@@ -10,6 +10,7 @@ import dev.camilo.demo.domain.repositories.TourRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ITourService;
 import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
+import dev.camilo.demo.infraestructure.helpers.EmailHelper;
 import dev.camilo.demo.infraestructure.helpers.TourHelper;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -42,6 +44,7 @@ public class TourService implements ITourService {
   private final TourHelper tourHelper;
   private  final CustomerHelper customerHelper;
   private final BlackListHelper blackListHelper;
+  private final EmailHelper emailHelper;
 
   //crear tour
   /**
@@ -85,6 +88,11 @@ public class TourService implements ITourService {
 
     /*incrementar contador de tour para customer*/
     this.customerHelper.increase(customer.getDni(), TourService.class);
+
+    /*verificar si viene un email en la request, si viene entonces enviar mail de reservation
+     * exitosa*/
+    if(Objects.nonNull(request.getEmail()))
+      this.emailHelper.sendMail(request.getEmail(),customer.getFullName(),Tables.tour.name());
 
     /*construyendo y retornando DTO TourResponse*/
     return TourResponse.builder()

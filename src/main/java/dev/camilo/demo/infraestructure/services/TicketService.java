@@ -13,6 +13,7 @@ import dev.camilo.demo.infraestructure.abstract_services.ITicketService;
 import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
+import dev.camilo.demo.infraestructure.helpers.EmailHelper;
 import dev.camilo.demo.util.BestTravelUtil;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
@@ -26,6 +27,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -46,6 +48,7 @@ public class TicketService implements ITicketService {
   private final CustomerHelper customerHelper;
   private final BlackListHelper blackListHelper;
   private final CurrencyHelper currencyHelper;
+  private final EmailHelper emailHelper;
 
   //crear nuevo ticket
   /**
@@ -82,6 +85,11 @@ public class TicketService implements ITicketService {
 
     /*incrementar contador de flights para customer*/
     this.customerHelper.increase(customer.getDni(), TicketService.class);
+
+    /*verificar si viene un email en la request, si viene entonces enviar mail de reservation
+     * exitosa*/
+    if(Objects.nonNull(request.getEmail()))
+      this.emailHelper.sendMail(request.getEmail(),customer.getFullName(),Tables.ticket.name());
 
     return this.entityToResponse(ticketPersisted);
   }

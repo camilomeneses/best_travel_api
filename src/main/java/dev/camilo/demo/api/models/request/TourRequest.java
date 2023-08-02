@@ -1,6 +1,7 @@
 package dev.camilo.demo.api.models.request;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -36,4 +37,9 @@ public class TourRequest implements Serializable {
    */
   @Size(min=1, message = "Min hotel tour per tour")
   private Set<TourHotelRequest> hotels;
+  /**
+   * email de customer
+   */
+  @Email(message = "Invalid email")
+  private String email;
 }
