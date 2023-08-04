@@ -13,7 +13,6 @@ import java.util.Properties;
  * Clase de configuracion para el mail
  */
 @Configuration
-@EnableConfigurationProperties
 public class EmailConfig {
 
   /**
