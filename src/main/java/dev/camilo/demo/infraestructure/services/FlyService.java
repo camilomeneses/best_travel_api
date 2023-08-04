@@ -4,10 +4,12 @@ import dev.camilo.demo.api.models.responses.FlyResponse;
 import dev.camilo.demo.domain.entities.FlyEntity;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IFlyService;
+import dev.camilo.demo.util.constants.CacheConstants;
 import dev.camilo.demo.util.enums.SortType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -60,6 +62,7 @@ public class FlyService implements IFlyService {
    * @return Set
    */
   @Override
+  @Cacheable(value = CacheConstants.FLY_CACHE_NAME)
   public Set<FlyResponse> readLessPrice(BigDecimal price) {
     return this.flyRepository.selectLessPrice(price).stream().map(this::entityToResponse).collect(Collectors.toSet());
   }
@@ -74,6 +77,7 @@ public class FlyService implements IFlyService {
    * @return Set
    */
   @Override
+  @Cacheable(value = CacheConstants.FLY_CACHE_NAME)
   public Set<FlyResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
     return this.flyRepository.selectBetweenPrice(min, max).stream().map(this::entityToResponse).collect(Collectors.toSet());
   }
@@ -88,6 +92,7 @@ public class FlyService implements IFlyService {
    * @return Set
    */
   @Override
+  @Cacheable(value = CacheConstants.FLY_CACHE_NAME)
   public Set<FlyResponse> readByOriginDestiny(String origen, String destiny) {
     return this.flyRepository.selectOriginDestiny(origen, destiny).stream().map(this::entityToResponse).collect(Collectors.toSet());
   }

@@ -4,10 +4,12 @@ import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.domain.entities.HotelEntity;
 import dev.camilo.demo.domain.repositories.HotelRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
+import dev.camilo.demo.util.constants.CacheConstants;
 import dev.camilo.demo.util.enums.SortType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -63,6 +65,7 @@ public class HotelService implements IHotelService {
    * @return Set
    */
   @Override
+  @Cacheable(value = CacheConstants.HOTEL_CACHE_NAME)
   public Set<HotelResponse> readLessPrice(BigDecimal price) {
     return this.hotelRepository.findByPriceLessThan(price)
         .stream()
@@ -80,6 +83,7 @@ public class HotelService implements IHotelService {
    * @return Set
    */
   @Override
+  @Cacheable(value = CacheConstants.HOTEL_CACHE_NAME)
   public Set<HotelResponse> readBetweenPrices(BigDecimal min, BigDecimal max) {
     return this.hotelRepository.findByPriceBetween(min, max)
         .stream()
@@ -96,6 +100,7 @@ public class HotelService implements IHotelService {
    * @return Set
    */
   @Override
+  @Cacheable(value = CacheConstants.HOTEL_CACHE_NAME)
   public Set<HotelResponse> readGraterThan(Integer rating) {
     return this.hotelRepository.findByRatingGreaterThan(rating)
         .stream()
