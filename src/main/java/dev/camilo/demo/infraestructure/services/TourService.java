@@ -88,6 +88,14 @@ public class TourService implements ITourService {
 
     /*incrementar contador de tour para customer*/
     this.customerHelper.increase(customer.getDni(), TourService.class);
+    /*incremetar contador de vuelos por este tour*/
+    for(int i = 0; i < flights.size();i++){
+      this.customerHelper.increase(customer.getDni(), TicketService.class);
+    }
+    /*incrementar contador de reservations por este tour*/
+    for(int i = 0; i < hotels.size(); i++){
+      this.customerHelper.increase(customer.getDni(), ReservationService.class);
+    }
 
     /*verificar si viene un email en la request, si viene entonces enviar mail de reservation
      * exitosa*/
