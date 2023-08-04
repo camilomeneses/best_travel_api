@@ -3,6 +3,7 @@ package dev.camilo.demo.infraestructure.helpers;
 import dev.camilo.demo.domain.entities.CurrencyEntity;
 import dev.camilo.demo.domain.repositories.CurrencyRepository;
 import dev.camilo.demo.infraestructure.dtos.CurrencyDTO;
+import dev.camilo.demo.util.constants.CurrencyConstanst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,19 +47,6 @@ public class ApiCurrencyConnectorHelper {
   private String symbolsCurrency;
 
   /**
-   * parte del path de request que tiene la base de moneda configurada
-   */
-  private static final String BASE_CURRENCY_QUERY_PARAM = "&base={baseCurrency}";
-  /**
-   * parte del path de request que tiene las divisas a convertir configuradas
-   */
-  private static final String SYMBOL_CURRENCY_QUERY_PARAM = "?symbols={symbolsCurrency}";
-  /**
-   * parte del path con el apartado de configuracion de divisas
-   */
-  private static final String CURRENCY_PATH = "/exchangerates_data/latest";
-
-  /**
    * Metodo para llamar a la api y traer las divisas y timestamp
    * @return CurrencyDTO
    */
@@ -66,9 +54,9 @@ public class ApiCurrencyConnectorHelper {
     return this.currencyWebClient
         .get()
         .uri(uri ->
-            uri.path(CURRENCY_PATH)
-                .query(SYMBOL_CURRENCY_QUERY_PARAM)
-                .query(BASE_CURRENCY_QUERY_PARAM)
+            uri.path(CurrencyConstanst.CURRENCY_PATH)
+                .query(CurrencyConstanst.SYMBOL_CURRENCY_QUERY_PARAM)
+                .query(CurrencyConstanst.BASE_CURRENCY_QUERY_PARAM)
                 .build(symbolsCurrency, baseCurrency))
         .retrieve()
         .bodyToMono(CurrencyDTO.class)

@@ -15,7 +15,6 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.Map;
@@ -71,5 +70,20 @@ public class RedisConfig {
         CacheConstants.HOTEL_CACHE_NAME, new CacheConfig()
     );
     return new RedissonSpringCacheManager(redissonClient, configs);
+  }
+
+  /**
+   * Metodo para limpiar el cache cada día a las 12am en otro hilo
+   */
+  @Async
+  @Scheduled(cron = CacheConstants.SCHEDULED_RESET_CACHE)
+  @CacheEvict(cacheNames = {
+      CacheConstants.HOTEL_CACHE_NAME,
+      CacheConstants.FLY_CACHE_NAME
+  },
+  allEntries = true
+  )
+  public void deleteCache(){
+    log.info(" --- --- Clean cache --- --- ");
   }
 }

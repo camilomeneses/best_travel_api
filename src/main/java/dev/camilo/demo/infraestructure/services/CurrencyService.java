@@ -1,6 +1,7 @@
 package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.infraestructure.helpers.ApiCurrencyConnectorHelper;
+import dev.camilo.demo.util.constants.CurrencyConstanst;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,19 +22,20 @@ public class CurrencyService {
    * verificar ultima hora de actualizacion despues de
    * arrancar la aplicacion y actualizar si es necesario
    */
-  /*@PostConstruct
+  @PostConstruct
   public void init() {
-    log.info(" -- -- verificando ultima hora de actualizacion de currency_data  -- -- ");
+    log.info(" -- -- verificando ultima hora de actualizacion de currency_data [init]  -- -- ");
     currencyConnectorHelper.updateCurrencyDataIfNeeded();
-  }*/
+  }
 
   /**
    * cada quince minutos verificar si ha pasado una hora de la hora de
    * ultima actualizacion guardada en la tabla currency_date
    */
-  @Scheduled(fixedRate = 900000)
+  ;
+  @Scheduled(cron = CurrencyConstanst.SCHEDULED_VERIFICATION_TIME)
   public void updateCurrencyDataHourly() {
-    log.info(" -- -- verificando ultima hora de actualizacion de currency_data -- -- ");
+    log.info(" -- -- verificando ultima hora de actualizacion de currency_data [cron] -- -- ");
     currencyConnectorHelper.updateCurrencyDataIfNeeded();
   }
 }
