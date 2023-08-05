@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
 
-  db:
+  sql-db:
     image: postgres:15.2-alpine
     container_name: best_travel
     restart: always
@@ -22,4 +22,17 @@ services:
     restart: always
     ports:
       - "6381:6379"
-    command: redis-server --loglevel warning --requirepass rediscam123lo
+    command: redis-server --loglevel warning --requirepass redispassword
+
+  document-db:
+    image: mongo:6.0.4
+    restart: always
+    container_name: best_travel_users
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: master
+      MONGO_INITDB_ROOT_PASSWORD: mongopassword
+      MONGO_INITDB_DATABASE: users
+    ports:
+      - "27019:27017"
+    volumes:
+      - ./db/mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro

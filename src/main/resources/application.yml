@@ -19,6 +19,15 @@ spring:
       INDENT_OUTPUT: true
     xml:
       enabled: true
+  # mongodb
+  data:
+    mongodb:
+      authentication-database: admin
+      host: localhost
+      port: 27019
+      database: app_users
+      username: master
+      password: mongopassword
 
 # Configuración para Hibernate y niveles de log
 logging:
