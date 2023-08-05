@@ -2,7 +2,7 @@ package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.domain.entities.jpa.HotelEntity;
-import dev.camilo.demo.domain.repositories.HotelRepository;
+import dev.camilo.demo.domain.repositories.jpa.HotelRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
 import dev.camilo.demo.util.constants.CacheConstants;
 import dev.camilo.demo.util.enums.SortType;

@@ -2,7 +2,7 @@ package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.api.models.responses.FlyResponse;
 import dev.camilo.demo.domain.entities.jpa.FlyEntity;
-import dev.camilo.demo.domain.repositories.FlyRepository;
+import dev.camilo.demo.domain.repositories.jpa.FlyRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IFlyService;
 import dev.camilo.demo.util.constants.CacheConstants;
 import dev.camilo.demo.util.enums.SortType;

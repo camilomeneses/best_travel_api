@@ -1,8 +1,8 @@
 package dev.camilo.demo.infraestructure.helpers;
 
 import dev.camilo.demo.domain.entities.jpa.*;
-import dev.camilo.demo.domain.repositories.ReservationRepository;
-import dev.camilo.demo.domain.repositories.TicketRepository;
+import dev.camilo.demo.domain.repositories.jpa.ReservationRepository;
+import dev.camilo.demo.domain.repositories.jpa.TicketRepository;
 import dev.camilo.demo.infraestructure.services.ReservationService;
 import dev.camilo.demo.infraestructure.services.TicketService;
 import dev.camilo.demo.util.BestTravelUtil;

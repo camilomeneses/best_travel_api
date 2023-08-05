@@ -1,4 +1,4 @@
-package dev.camilo.demo.domain.repositories;
+package dev.camilo.demo.domain.repositories.jpa;
 
 import dev.camilo.demo.domain.entities.jpa.CurrencyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

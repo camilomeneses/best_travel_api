@@ -1,6 +1,6 @@
 package dev.camilo.demo.infraestructure.helpers;
 
-import dev.camilo.demo.domain.repositories.CustomerRepository;
+import dev.camilo.demo.domain.repositories.jpa.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

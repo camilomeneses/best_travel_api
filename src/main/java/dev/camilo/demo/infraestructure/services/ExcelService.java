@@ -1,7 +1,7 @@
 package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.domain.entities.jpa.CustomerEntity;
-import dev.camilo.demo.domain.repositories.CustomerRepository;
+import dev.camilo.demo.domain.repositories.jpa.CustomerRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ReportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
