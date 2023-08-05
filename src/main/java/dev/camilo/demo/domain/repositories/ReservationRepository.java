@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.repositories;
 
-import dev.camilo.demo.domain.entities.ReservationEntity;
+import dev.camilo.demo.domain.entities.jpa.ReservationEntity;
 import org.springframework.data.repository.CrudRepository;
 import java.util.UUID;
 

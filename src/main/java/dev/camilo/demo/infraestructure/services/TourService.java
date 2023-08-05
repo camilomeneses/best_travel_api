@@ -2,7 +2,7 @@ package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.api.models.request.TourRequest;
 import dev.camilo.demo.api.models.responses.TourResponse;
-import dev.camilo.demo.domain.entities.*;
+import dev.camilo.demo.domain.entities.jpa.*;
 import dev.camilo.demo.domain.repositories.CustomerRepository;
 import dev.camilo.demo.domain.repositories.FlyRepository;
 import dev.camilo.demo.domain.repositories.HotelRepository;

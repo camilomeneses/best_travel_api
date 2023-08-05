@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.repositories;
 
-import dev.camilo.demo.domain.entities.HotelEntity;
+import dev.camilo.demo.domain.entities.jpa.HotelEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.math.BigDecimal;

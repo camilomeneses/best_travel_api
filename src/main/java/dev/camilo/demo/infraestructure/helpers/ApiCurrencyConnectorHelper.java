@@ -1,6 +1,6 @@
 package dev.camilo.demo.infraestructure.helpers;
 
-import dev.camilo.demo.domain.entities.CurrencyEntity;
+import dev.camilo.demo.domain.entities.jpa.CurrencyEntity;
 import dev.camilo.demo.domain.repositories.CurrencyRepository;
 import dev.camilo.demo.infraestructure.dtos.CurrencyDTO;
 import dev.camilo.demo.util.constants.CurrencyConstanst;

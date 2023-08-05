@@ -1,6 +1,6 @@
 package dev.camilo.demo.infraestructure.helpers;
 
-import dev.camilo.demo.domain.entities.CurrencyEntity;
+import dev.camilo.demo.domain.entities.jpa.CurrencyEntity;
 import dev.camilo.demo.domain.repositories.CurrencyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

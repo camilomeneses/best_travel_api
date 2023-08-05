@@ -1,4 +1,4 @@
-package dev.camilo.demo.domain.entities;
+package dev.camilo.demo.domain.entities.jpa;
 
 import dev.camilo.demo.util.enums.AeroLine;
 import jakarta.persistence.*;

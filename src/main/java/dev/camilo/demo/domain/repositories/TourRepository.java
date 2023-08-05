@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.repositories;
 
-import dev.camilo.demo.domain.entities.TourEntity;
+import dev.camilo.demo.domain.entities.jpa.TourEntity;
 import org.springframework.data.repository.CrudRepository;
 
 /**

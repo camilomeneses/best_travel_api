@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.repositories;
 
-import dev.camilo.demo.domain.entities.FlyEntity;
+import dev.camilo.demo.domain.entities.jpa.FlyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

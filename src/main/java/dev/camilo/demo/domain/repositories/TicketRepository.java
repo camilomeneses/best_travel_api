@@ -1,6 +1,6 @@
 package dev.camilo.demo.domain.repositories;
 
-import dev.camilo.demo.domain.entities.TicketEntity;
+import dev.camilo.demo.domain.entities.jpa.TicketEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;
