@@ -69,6 +69,12 @@ public class AppUserService implements ModifyUserService /*, UserDetailsService*
     return Collections.singletonMap(userSaved.getUsername(), authorities);
   }
 
+  /**
+   * Metodo para remover un rol a un usuario
+   * @param username String
+   * @param role String
+   * @return Map
+   */
   @Override
   public Map<String, List<String>> removeRole(String username, String role) {
     /*traer usuario*/
@@ -86,6 +92,10 @@ public class AppUserService implements ModifyUserService /*, UserDetailsService*
     return Collections.singletonMap(userSaved.getUsername(), authorities);
   }
 
+  /**
+   * Metodo
+   * @param username
+   */
   @Transactional(readOnly = true)
   private void loadUserByUsername(String username){
     /*traer usuario*/

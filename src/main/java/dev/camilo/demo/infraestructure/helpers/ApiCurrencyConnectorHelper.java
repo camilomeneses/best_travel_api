@@ -3,7 +3,7 @@ package dev.camilo.demo.infraestructure.helpers;
 import dev.camilo.demo.domain.entities.jpa.CurrencyEntity;
 import dev.camilo.demo.domain.repositories.jpa.CurrencyRepository;
 import dev.camilo.demo.infraestructure.dtos.CurrencyDTO;
-import dev.camilo.demo.util.constants.CurrencyConstanst;
+import dev.camilo.demo.util.constants.CurrencyConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,9 +54,9 @@ public class ApiCurrencyConnectorHelper {
     return this.currencyWebClient
         .get()
         .uri(uri ->
-            uri.path(CurrencyConstanst.CURRENCY_PATH)
-                .query(CurrencyConstanst.SYMBOL_CURRENCY_QUERY_PARAM)
-                .query(CurrencyConstanst.BASE_CURRENCY_QUERY_PARAM)
+            uri.path(CurrencyConstants.CURRENCY_PATH)
+                .query(CurrencyConstants.SYMBOL_CURRENCY_QUERY_PARAM)
+                .query(CurrencyConstants.BASE_CURRENCY_QUERY_PARAM)
                 .build(symbolsCurrency, baseCurrency))
         .retrieve()
         .bodyToMono(CurrencyDTO.class)
