@@ -14,7 +14,8 @@ import org.springframework.context.annotation.PropertySources;
 @PropertySources({
     @PropertySource(value = "classpath:configs/api_currency.properties"),
     @PropertySource(value = "classpath:configs/mail_sender.properties"),
-    @PropertySource(value = "classpath:configs/redis.properties")
+    @PropertySource(value = "classpath:configs/redis.properties"),
+    @PropertySource(value = "classpath:configs/client_security.properties")
 })
 public class PropertiesConfig {
 }
