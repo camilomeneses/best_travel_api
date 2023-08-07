@@ -25,7 +25,7 @@ spring:
       authentication-database: admin
       host: localhost
       port: 27019
-      database: app_users
+      database: users
       username: master
       password: mongopassword
 

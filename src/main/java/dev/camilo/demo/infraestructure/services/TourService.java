@@ -15,7 +15,6 @@ import dev.camilo.demo.infraestructure.helpers.TourHelper;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +29,6 @@ import java.util.stream.Collectors;
  */
 @Transactional //gestion de transacciones
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class TourService implements ITourService {
 

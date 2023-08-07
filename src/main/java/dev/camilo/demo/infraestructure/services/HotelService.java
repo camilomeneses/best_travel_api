@@ -7,7 +7,6 @@ import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
 import dev.camilo.demo.util.constants.CacheConstants;
 import dev.camilo.demo.util.enums.SortType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -25,7 +24,6 @@ import java.util.stream.Collectors;
  */
 @Transactional(readOnly = true) //gestion de transacciones
 @Service
-@Slf4j
 @RequiredArgsConstructor
 public class HotelService implements IHotelService {
 

@@ -2,9 +2,10 @@ package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.infraestructure.helpers.ApiCurrencyConnectorHelper;
 import dev.camilo.demo.util.constants.CurrencyConstanst;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+/* import jakarta.annotation.PostConstruct; */
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -22,20 +23,21 @@ public class CurrencyService {
    * verificar ultima hora de actualizacion despues de
    * arrancar la aplicacion y actualizar si es necesario
    */
-  @PostConstruct
+  /*@PostConstruct
   public void init() {
     log.info(" -- -- verificando ultima hora de actualizacion de currency_data [init]  -- -- ");
     currencyConnectorHelper.updateCurrencyDataIfNeeded();
   }
-
+*/
   /**
    * cada quince minutos verificar si ha pasado una hora de la hora de
    * ultima actualizacion guardada en la tabla currency_date
    */
   ;
-  @Scheduled(cron = CurrencyConstanst.SCHEDULED_VERIFICATION_TIME)
+  /*@Scheduled(cron = CurrencyConstanst.SCHEDULED_VERIFICATION_TIME)*/
+  @Scheduled(fixedRate = 900000) //fix delay to init application
   public void updateCurrencyDataHourly() {
-    log.info(" -- -- verificando ultima hora de actualizacion de currency_data [cron] -- -- ");
+    log.info(" -- -- verificando ultima hora de actualizacion de currency_data [fixedRate] -- -- ");
     currencyConnectorHelper.updateCurrencyDataIfNeeded();
   }
 }

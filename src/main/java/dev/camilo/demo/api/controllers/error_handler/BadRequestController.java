@@ -4,6 +4,7 @@ import dev.camilo.demo.api.models.responses.error.BaseErrorResponse;
 import dev.camilo.demo.api.models.responses.error.ErrorResponse;
 import dev.camilo.demo.api.models.responses.error.ErrorsResponse;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
+import dev.camilo.demo.util.exceptions.UsernameNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -31,9 +32,13 @@ public class BadRequestController {
    * @param request HttpServletRequest
    * @return ResponseEntity
    */
-  @ExceptionHandler(IdNotFoundException.class)
+  /*Manejo de excepeciones code 400 - IdNotFoundException, UsernameNotFoundException*/
+  @ExceptionHandler({
+      IdNotFoundException.class,
+      UsernameNotFoundException.class
+  })
   public ResponseEntity<BaseErrorResponse> handleIdNotFound(
-      IdNotFoundException exception,
+      RuntimeException exception,
       HttpServletRequest request
   ) {
     String contentType = request.getContentType();

@@ -7,19 +7,39 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.UUID;
-
-@Document(collection = "app_user")
-@Data
-@Builder
+/**
+ * Document appUser para mongo db
+ */
+@Document(collection = "app_users")
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Builder
 public class AppUserDocument {
 
+  /**
+   * identificador
+   */
   @Id
-  private UUID id;
+  private String id;
+  /**
+   * dni
+   */
   private String dni;
+  /**
+   * nombre usuario
+   */
+  private String username;
+  /**
+   * usuario habilitado
+   */
   private boolean enabled;
+  /**
+   * password
+   */
   private String password;
+  /**
+   * objeto Role
+   */
   private Role role;
 }

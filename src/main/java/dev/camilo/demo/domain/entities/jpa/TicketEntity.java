@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -18,7 +17,7 @@ import java.util.UUID;
  *    <li><b>id</b> UUID</li>
  *    <li><b>departureDate</b> LocalDateTime</li>
  *    <li><b>arrivalDate</b> LocalDateTime</li>
- *    <li><b>purchaseDate</b> LocalDate</li>
+ *    <li><b>purchaseDate</b> LocalDateTime</li>
  *    <li><b>price</b> BigDecimal</li>
  *    <li><b>tour</b> Set de TourEntity <small>(llave foranea)</small></li>
  *    <li><b>fly</b> Set de FlyEntity <small>(llave foranea)</small></li>
@@ -36,7 +35,7 @@ public class TicketEntity {
   private UUID id;
   private LocalDateTime departureDate;
   private LocalDateTime arrivalDate;
-  private LocalDate purchaseDate;
+  private LocalDateTime purchaseDate;
   private BigDecimal price;
   /*mapeo directo tour*///check
   @ManyToOne(fetch = FetchType.LAZY)

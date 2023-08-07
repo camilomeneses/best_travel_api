@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
@@ -72,7 +72,7 @@ public class TicketService implements ITicketService {
         .customer(customer)
         /*aumentar el valor del precio un 25%*/
         .price(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
-        .purchaseDate(LocalDate.now())
+        .purchaseDate(LocalDateTime.now())
         .departureDate(BestTravelUtil.getRandomSoon())
         .arrivalDate(BestTravelUtil.getRandomLatter())
         .build();

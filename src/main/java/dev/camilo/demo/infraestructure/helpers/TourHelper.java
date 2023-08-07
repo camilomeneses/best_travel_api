@@ -46,7 +46,7 @@ public class TourHelper {
         .customer(customer)
         /*aumentar el valor del precio un 25%*/
         .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
-        .purchaseDate(LocalDate.now())
+        .purchaseDate(LocalDateTime.now())
         .departureDate(BestTravelUtil.getRandomSoon())
         .arrivalDate(BestTravelUtil.getRandomLatter())
         .build();
@@ -69,7 +69,7 @@ public class TourHelper {
           .customer(customer)
           /*aumentar el valor del precio un 25%*/
           .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
-          .purchaseDate(LocalDate.now())
+          .purchaseDate(LocalDateTime.now())
           .departureDate(BestTravelUtil.getRandomSoon())
           .arrivalDate(BestTravelUtil.getRandomLatter())
           .build();
