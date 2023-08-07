@@ -3,7 +3,7 @@ package dev.camilo.demo.util.constants;
 /**
  * constantes de Currency
  */
-public class CurrencyConstanst {
+public class CurrencyConstants {
   /**
    * parte del path con el apartado de configuracion de divisas
    */

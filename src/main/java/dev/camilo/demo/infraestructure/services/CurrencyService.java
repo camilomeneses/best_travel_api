@@ -1,7 +1,6 @@
 package dev.camilo.demo.infraestructure.services;
 
 import dev.camilo.demo.infraestructure.helpers.ApiCurrencyConnectorHelper;
-import dev.camilo.demo.util.constants.CurrencyConstanst;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

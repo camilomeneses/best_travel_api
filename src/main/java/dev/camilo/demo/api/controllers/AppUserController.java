@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller REST para respuestas JSON y XML para fly
+ * Controller REST para respuestas JSON y XML para User
  */
 @Tag(name = "User")
 @RestController
@@ -21,6 +21,11 @@ public class AppUserController {
   //servicios inyectados
   private final ModifyUserService userService;
 
+  /**
+   * Controlador para habilitar o desabilitar un usuario
+   * @param username String
+   * @return ResponseEntity
+   */
   @Operation(
       summary = "Habilitar/Desabilitar Usuario",
       description = "Cambiar la propiedad enabled a true o false"
@@ -30,6 +35,12 @@ public class AppUserController {
     return ResponseEntity.ok(this.userService.enabled(username));
   }
 
+  /**
+   * Metodo para agregar un rol a un usuario
+   * @param username String
+   * @param role String
+   * @return ResponseEntity
+   */
   @Operation(
       summary = "Agregar role a user",
       description = "Agregar role a usuario"
@@ -42,6 +53,12 @@ public class AppUserController {
     return ResponseEntity.ok(this.userService.addRole(username,role));
   }
 
+  /**
+   * Metodo para remover un rol a un usuario
+   * @param username String
+   * @param role String
+   * @return ResponseEntity
+   */
   @Operation(
       summary = "Remove role a user",
       description = "Remove role a usuario"
