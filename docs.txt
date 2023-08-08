@@ -1,0 +1,39 @@
+
+** PUBLIC PATHS **
+swagger
+http://localhost:8080/best_travel/swagger-ui/index.html#/
+
+v3/api/docs
+http://localhost:8080/best_travel/v3/api-docs
+
+well-known
+http://localhost:8080/best_travel/.well-known/oauth-authorization-server
+
+oauthdebugger
+https://oauthdebugger.com/
+
+fly filters request
+/fly/**
+
+hotel filter request
+/hotel/**
+
+** CUSTOMER PATHS **
+tickets
+/ticket/**
+
+reservation
+/reservation/**
+
+tour
+/tour/**
+
+** ADMIN PATHS **
+users
+/user/**
+
+reports
+/report/**
+
+//TODO realizar anotacion para manejo de Usuarios bloqueados ForbiddenCustomer implementar en todos los controllers disponibles
+//TODO BadRequest implementar en todos los controllers donde vayan un @RequestBody
