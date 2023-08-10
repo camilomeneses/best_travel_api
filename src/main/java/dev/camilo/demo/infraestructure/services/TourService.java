@@ -12,6 +12,7 @@ import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.infraestructure.helpers.EmailHelper;
 import dev.camilo.demo.infraestructure.helpers.TourHelper;
+import dev.camilo.demo.util.annotations.BlackListCheck;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -54,8 +55,8 @@ public class TourService implements ITourService {
    * @return TourResponse
    */
   @Override
+  @BlackListCheck
   public TourResponse create(TourRequest request) {
-    this.blackListHelper.isInBlackListCustomer(request.getCustomerId());
     var customer = customerRepository
         .findById(request.getCustomerId())
         .orElseThrow(() -> new IdNotFoundException(Tables.customer.name()));
@@ -115,6 +116,7 @@ public class TourService implements ITourService {
    * @return TourResponse
    */
   @Override
+  @BlackListCheck
   public TourResponse read(Long id) {
     var tourFromDB = this.tourRepository
         .findById(id)
@@ -132,6 +134,7 @@ public class TourService implements ITourService {
    * @param id Long
    */
   @Override
+  @BlackListCheck
   public void delete(Long id) {
     var tourToDelete = this.tourRepository
         .findById(id)
@@ -150,6 +153,7 @@ public class TourService implements ITourService {
    * @return UUID
    */
   @Override
+  @BlackListCheck
   public UUID addTicket(Long tourId,Long flyId) {
     /*traer tour para actualizar*/
     var tourToUpdate = this.tourRepository
@@ -176,6 +180,7 @@ public class TourService implements ITourService {
    * @param tourId Long
    */
   @Override
+  @BlackListCheck
   public void removeTicket(Long tourId,UUID ticketId ) {
     var tourToUpdate = this.tourRepository
         .findById(tourId)
@@ -195,6 +200,7 @@ public class TourService implements ITourService {
    * @return UUID
    */
   @Override
+  @BlackListCheck
   public UUID addReservation(Long tourId,Long hotelId, Integer totalDays ) {
     /*traer tour para actualizar*/
     var tourToUpdate = this.tourRepository
@@ -220,6 +226,7 @@ public class TourService implements ITourService {
    * @param reservationId UUID
    */
   @Override
+  @BlackListCheck
   public void removeReservation(Long tourId,UUID reservationId ) {
     var tourToUpdate = this.tourRepository
         .findById(tourId)

@@ -28,6 +28,10 @@ public class ExcelService implements ReportService {
   //repositorios inyectados
   private final CustomerRepository customerRepository;
 
+  /**
+   * Metodo para crear el archivo excel y guardarlo en el path
+   * @return byte[]
+   */
   @Override
   public byte[] readFile() {
     try {
@@ -41,6 +45,10 @@ public class ExcelService implements ReportService {
   }
 
   //private methods
+
+  /**
+   * Metodo para crear el reporte de excel
+   */
   private void createReport() {
     /*crear libro*/
     var workbook = new XSSFWorkbook();

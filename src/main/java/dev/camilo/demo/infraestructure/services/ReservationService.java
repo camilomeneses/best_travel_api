@@ -13,6 +13,7 @@ import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.infraestructure.helpers.EmailHelper;
+import dev.camilo.demo.util.annotations.BlackListCheck;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +56,8 @@ public class ReservationService implements IReservationService {
    * @return ReservationResponse
    */
   @Override
+  @BlackListCheck
   public ReservationResponse create(ReservationRequest request) {
-    this.blackListHelper.isInBlackListCustomer(request.getIdClient());
     /*variables de entrada del request*/
     var hotel = hotelRepository
         .findById(request.getIdHotel())
@@ -100,6 +101,7 @@ public class ReservationService implements IReservationService {
    * @return ReservationResponse
    */
   @Override
+  @BlackListCheck
   public ReservationResponse read(UUID id) {
     /*variables de entrada del request*/
     var reservationFromDB = reservationRepository
@@ -116,6 +118,7 @@ public class ReservationService implements IReservationService {
    * @return ReservationResponse
    */
   @Override
+  @BlackListCheck
   public ReservationResponse update(ReservationRequest request, UUID id) {
     /*variables de entrada del request*/
     var hotel = hotelRepository
@@ -146,6 +149,7 @@ public class ReservationService implements IReservationService {
    * @param id UUID
    */
   @Override
+  @BlackListCheck
   public void delete(UUID id) {
     /*variables de entrada del request*/
     var reservationToDelete = reservationRepository
@@ -164,6 +168,7 @@ public class ReservationService implements IReservationService {
    * @return BigDecimal
    */
   @Override
+  @BlackListCheck
   public BigDecimal findPrice(Long hotelId, Locale customerLocale) {
     var hotel = hotelRepository
         .findById(hotelId)

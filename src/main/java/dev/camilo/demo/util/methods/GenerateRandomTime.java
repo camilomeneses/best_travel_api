@@ -1,4 +1,4 @@
-package dev.camilo.demo.util;
+package dev.camilo.demo.util.methods;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * Utilidades generales que pueden usarse a nivel global en el app
  */
-public class BestTravelUtil {
+public class GenerateRandomTime {
   private static final Random random = new Random();
 
   /*generar hora proxima*/

@@ -13,7 +13,8 @@ import dev.camilo.demo.infraestructure.helpers.BlackListHelper;
 import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.infraestructure.helpers.EmailHelper;
-import dev.camilo.demo.util.BestTravelUtil;
+import dev.camilo.demo.util.annotations.BlackListCheck;
+import dev.camilo.demo.util.methods.GenerateRandomTime;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -55,8 +56,8 @@ public class TicketService implements ITicketService {
    * @return TicketResponse
    */
   @Override
+  @BlackListCheck
   public TicketResponse create(TicketRequest request) {
-    this.blackListHelper.isInBlackListCustomer(request.getIdClient());
     /*variables de entrada del request*/
     var fly = flyRepository
         .findById(request.getIdFly())
@@ -73,8 +74,8 @@ public class TicketService implements ITicketService {
         /*aumentar el valor del precio un 25%*/
         .price(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)))
         .purchaseDate(LocalDateTime.now())
-        .departureDate(BestTravelUtil.getRandomSoon())
-        .arrivalDate(BestTravelUtil.getRandomLatter())
+        .departureDate(GenerateRandomTime.getRandomSoon())
+        .arrivalDate(GenerateRandomTime.getRandomLatter())
         .build();
 
         /*persistir el ticket*/
@@ -99,6 +100,7 @@ public class TicketService implements ITicketService {
    * @return TicketResponse
    */
   @Override
+  @BlackListCheck
   public TicketResponse read(UUID id) {
     /*variables de entrada del request*/
     var ticketFromDB = this.ticketRepository
@@ -115,6 +117,7 @@ public class TicketService implements ITicketService {
    * @return TicketResponseb
    */
   @Override
+  @BlackListCheck
   public TicketResponse update(TicketRequest request, UUID id) {
     /*variables de entrada del request*/
     var ticketToUpdate = ticketRepository
@@ -129,8 +132,8 @@ public class TicketService implements ITicketService {
     ticketToUpdate.setFly(fly);
     /*aumentar el valor del precio un 25%*/
     ticketToUpdate.setPrice(fly.getPrice().add(fly.getPrice().multiply(CHARGES_PRICE_PERCENTAGE)));
-    ticketToUpdate.setDepartureDate(BestTravelUtil.getRandomSoon());
-    ticketToUpdate.setArrivalDate(BestTravelUtil.getRandomLatter());
+    ticketToUpdate.setDepartureDate(GenerateRandomTime.getRandomSoon());
+    ticketToUpdate.setArrivalDate(GenerateRandomTime.getRandomLatter());
 
     var ticketUpdated = this.ticketRepository.save(ticketToUpdate);
     log.info("Ticket updated with id {}", ticketUpdated.getId());
@@ -143,6 +146,7 @@ public class TicketService implements ITicketService {
    * @param id UUID
    */
   @Override
+  @BlackListCheck
   public void delete(UUID id) {
     /*variables de entrada del request*/
     var ticketToDelete = ticketRepository
@@ -161,6 +165,7 @@ public class TicketService implements ITicketService {
    * @return BigDecimal
    */
   @Override
+  @BlackListCheck
   public BigDecimal findPrice(Long flyId, Locale customerLocale) {
     var fly = this.flyRepository
         .findById(flyId)

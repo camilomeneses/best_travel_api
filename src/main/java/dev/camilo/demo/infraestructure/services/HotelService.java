@@ -4,6 +4,7 @@ import dev.camilo.demo.api.models.responses.HotelResponse;
 import dev.camilo.demo.domain.entities.jpa.HotelEntity;
 import dev.camilo.demo.domain.repositories.jpa.HotelRepository;
 import dev.camilo.demo.infraestructure.abstract_services.IHotelService;
+import dev.camilo.demo.util.annotations.Notify;
 import dev.camilo.demo.util.constants.CacheConstants;
 import dev.camilo.demo.util.enums.SortType;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,7 @@ public class HotelService implements IHotelService {
    * @return Page
    */
   @Override
+  @Notify(value = "GET Hotel")
   public Page<HotelResponse> readAll(Integer page, Integer size, SortType sortType) {
     PageRequest pageRequest = null;
     switch (sortType) {

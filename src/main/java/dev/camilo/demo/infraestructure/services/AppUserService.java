@@ -3,6 +3,7 @@ package dev.camilo.demo.infraestructure.services;
 import dev.camilo.demo.domain.entities.documents.AppUserDocument;
 import dev.camilo.demo.domain.repositories.mongo.AppUserRepository;
 import dev.camilo.demo.infraestructure.abstract_services.ModifyUserService;
+import dev.camilo.demo.util.annotations.BlackListCheck;
 import dev.camilo.demo.util.enums.Documents;
 import dev.camilo.demo.util.exceptions.UsernameNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,7 @@ public class AppUserService implements ModifyUserService , UserDetailsService {
    * @return Map
    */
   @Override
+  @BlackListCheck
   public Map<String, Boolean> enabled(String username) {
     /*traer el usuario*/
     var user = this.appUserRepository.findByUsername(username)
@@ -61,6 +63,7 @@ public class AppUserService implements ModifyUserService , UserDetailsService {
    * @return Map
    */
   @Override
+  @BlackListCheck
   public Map<String, List<String>> addRole(String username, String role) {
     /*traer usuario*/
     var user = this.appUserRepository.findByUsername(username)
@@ -84,6 +87,7 @@ public class AppUserService implements ModifyUserService , UserDetailsService {
    * @return Map
    */
   @Override
+  @BlackListCheck
   public Map<String, List<String>> removeRole(String username, String role) {
     /*traer usuario*/
     var user = this.appUserRepository.findByUsername(username)

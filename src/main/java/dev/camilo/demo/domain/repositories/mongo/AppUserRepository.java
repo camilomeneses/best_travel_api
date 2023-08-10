@@ -16,4 +16,11 @@ public interface AppUserRepository extends MongoRepository<AppUserDocument, Stri
    * @return Optional
    */
   Optional<AppUserDocument> findByUsername(String username);
+
+  /**
+   * Metodo para buscar usuario por Dni
+   * @param userDni String
+   * @return Optional
+   */
+  Optional<AppUserDocument> findByDni(String userDni);
 }

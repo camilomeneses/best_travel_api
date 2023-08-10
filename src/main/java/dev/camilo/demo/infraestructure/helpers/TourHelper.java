@@ -5,7 +5,7 @@ import dev.camilo.demo.domain.repositories.jpa.ReservationRepository;
 import dev.camilo.demo.domain.repositories.jpa.TicketRepository;
 import dev.camilo.demo.infraestructure.services.ReservationService;
 import dev.camilo.demo.infraestructure.services.TicketService;
-import dev.camilo.demo.util.BestTravelUtil;
+import dev.camilo.demo.util.methods.GenerateRandomTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +47,8 @@ public class TourHelper {
         /*aumentar el valor del precio un 25%*/
         .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
         .purchaseDate(LocalDateTime.now())
-        .departureDate(BestTravelUtil.getRandomSoon())
-        .arrivalDate(BestTravelUtil.getRandomLatter())
+        .departureDate(GenerateRandomTime.getRandomSoon())
+        .arrivalDate(GenerateRandomTime.getRandomLatter())
         .build();
     return this.ticketRepository.save(ticketToPersist);
   }
@@ -70,8 +70,8 @@ public class TourHelper {
           /*aumentar el valor del precio un 25%*/
           .price(fly.getPrice().add(fly.getPrice().multiply(TicketService.CHARGES_PRICE_PERCENTAGE)))
           .purchaseDate(LocalDateTime.now())
-          .departureDate(BestTravelUtil.getRandomSoon())
-          .arrivalDate(BestTravelUtil.getRandomLatter())
+          .departureDate(GenerateRandomTime.getRandomSoon())
+          .arrivalDate(GenerateRandomTime.getRandomLatter())
           .build();
 
       response.add(this.ticketRepository.save(ticketToPersist));
