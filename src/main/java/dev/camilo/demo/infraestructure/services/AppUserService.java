@@ -8,6 +8,7 @@ import dev.camilo.demo.util.enums.Documents;
 import dev.camilo.demo.util.exceptions.UsernameNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -47,6 +48,7 @@ public class AppUserService implements ModifyUserService , UserDetailsService {
     /*traer el usuario*/
     var user = this.appUserRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException(Documents.app_user.name()));
+
     /*habilitar / desabilitar*/
     user.setEnabled(!user.isEnabled());
     /*guardar*/
@@ -68,6 +70,8 @@ public class AppUserService implements ModifyUserService , UserDetailsService {
     /*traer usuario*/
     var user = this.appUserRepository.findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException(Documents.app_user.name()));
+
+
     /*asignar role nuevo*/
     user.getRole().getGrantedAuthorities().add(role);
     /*guardar usuario con authoriries*/

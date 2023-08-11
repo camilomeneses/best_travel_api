@@ -2,13 +2,9 @@ package dev.camilo.demo.util.classes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.camilo.demo.domain.entities.documents.AppUserDocument;
-import dev.camilo.demo.domain.repositories.mongo.AppUserRepository;
 import dev.camilo.demo.util.constants.SecurityConstants;
-import dev.camilo.demo.util.enums.Documents;
-import dev.camilo.demo.util.exceptions.UsernameNotFoundException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,11 +22,25 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Esta clase se encarga de recibir el username y las credenciales para si existe
+ * segun el UserDetailsService entonces se pueda dar el token con el payload, si por
+ * el contrario no existe entonces da un mensaje de error en la respuesta
+ */
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
 
+  /**
+   * Metodo para el proceso de logeo, donde del request sacamos el username y password,
+   * para despues enviar a validad por medio del authenticationManager
+   *
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
+   * @return Authentication
+   * @throws AuthenticationException RuntimeException
+   */
   @Override
   public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
@@ -40,9 +50,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     try {
       user = new ObjectMapper().readValue(request.getInputStream(), AppUserDocument.class);
-/*      var userDb = this.appUserRepository.findByUsername(user.getUsername())
-          .orElseThrow(() -> new UsernameNotFoundException(Documents.app_user.name()));
-      username = userDb.getUsername();*/
       username = user.getUsername();
       password = user.getPassword();
 
@@ -51,11 +58,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password);
+
     return authenticationManager.authenticate(authToken);
   }
 
+  /**
+   * Metodo para el momento donde authenticationManager responde positivamente,
+   * en donde construimos el token y tambien el HashMap que se envia como respuesta
+   *
+   * @param request    HttpServletRequest
+   * @param response   HttpServletResponse
+   * @param chain      FilterChain
+   * @param authResult Authentication
+   * @throws IOException Exception
+   */
   @Override
-  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+  protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException {
     String username = ((User) authResult.getPrincipal()).getUsername();
     Collection<? extends GrantedAuthority> roles = authResult.getAuthorities();
     boolean isAdmin = roles.stream().anyMatch(rol -> rol.getAuthority().equals(SecurityConstants.ADMIN_ROLE));
@@ -88,8 +106,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     response.setContentType("application/json");
   }
 
+  /**
+   * Metodo para responder en caso que el authenticationManager responda de manera negativa
+   * para tal caso respondemos con un mensaje
+   *
+   * @param request  HttpServletRequest
+   * @param response HttpServletResponse
+   * @param failed   AuthenticationException
+   * @throws IOException Exception
+   */
   @Override
-  protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+  protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException {
     Map<String, Object> body = new HashMap<>();
     body.put("message", "Error en la autenticacion username o password incorrecto");
 

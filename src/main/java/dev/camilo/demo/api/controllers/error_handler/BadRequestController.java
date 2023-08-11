@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -28,16 +29,19 @@ public class BadRequestController {
   /**
    * Metodo para recuperar IdNotFoundException y llevarlo a la respuesta del
    * controlador, se identifica si la respuesta debe ser JSON o XML
+   *
    * @param exception IdNotFoundExeption
-   * @param request HttpServletRequest
+   * @param request   HttpServletRequest
    * @return ResponseEntity
    */
-  /*Manejo de excepeciones code 400 - IdNotFoundException, UsernameNotFoundException*/
+  /*Manejo de excepeciones code 400 - IdNotFoundException, UsernameNotFoundException, MethodArgumentNotValidException, InternalAuthenticationServiceException*/
   @ExceptionHandler({
-      IdNotFoundException.class,
-      UsernameNotFoundException.class
+      InternalAuthenticationServiceException.class,
+      UsernameNotFoundException.class,
+      IdNotFoundException.class
   })
-  public ResponseEntity<BaseErrorResponse> handleIdNotFound(
+  @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+  public ResponseEntity<BaseErrorResponse> handleIdNotFoundRuntimeException(
       RuntimeException exception,
       HttpServletRequest request
   ) {
@@ -66,17 +70,12 @@ public class BadRequestController {
     }
   }
 
-  /**
-   * Metodo para recuperar MethodArgumentNotValidException y llevarlo a la respuesta del
-   * controlador,este tiene un grupo de errores,
-   * se identifica si la respuesta debe ser JSON o XML
-   * @param exception IdNotFoundExeption
-   * @param request HttpServletRequest
-   * @return ResponseEntity
-   */
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<BaseErrorResponse> handleIdNotFound(
-      MethodArgumentNotValidException exception,
+  @ExceptionHandler({
+      MethodArgumentNotValidException.class,
+  })
+  @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+  public ResponseEntity<BaseErrorResponse> handleIdNotFoundException(
+      Exception exception,
       HttpServletRequest request
   ) {
     String contentType = request.getContentType();
@@ -84,12 +83,8 @@ public class BadRequestController {
     /*verificar si el path contiene /xml/*/
     boolean isXmlRequest = path.contains("/xml/");
 
-    var errors = new ArrayList<String>();
-    exception.getAllErrors()
-        .forEach(error -> errors.add(error.getDefaultMessage()));
-
-    ErrorsResponse errorsResponse = ErrorsResponse.builder()
-        .messages(errors)
+    ErrorResponse errorResponse = ErrorResponse.builder()
+        .message(exception.getMessage())
         .status(HttpStatus.BAD_REQUEST.name())
         .errorCode(HttpStatus.BAD_REQUEST.value())
         .build();
@@ -98,14 +93,15 @@ public class BadRequestController {
       /*Si es una solicitud XML, responder con formato XML*/
       return ResponseEntity.badRequest()
           .contentType(MediaType.APPLICATION_XML)
-          .body(errorsResponse);
+          .body(errorResponse);
     } else {
       /*Si no es una solicitud XML, responder con formato JSON (por defecto)*/
       return ResponseEntity
           .badRequest()
           .contentType(MediaType.APPLICATION_JSON)
-          .body(errorsResponse);
+          .body(errorResponse);
     }
   }
+
 }
 

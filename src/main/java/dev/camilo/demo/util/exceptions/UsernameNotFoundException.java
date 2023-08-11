@@ -1,9 +1,11 @@
 package dev.camilo.demo.util.exceptions;
 
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
+
 /**
  * Exception para cuando no se encuentra un id en una tabla determinada
  */
-public class UsernameNotFoundException extends RuntimeException{
+public class UsernameNotFoundException extends InternalAuthenticationServiceException {
   /**
    * Mensaje de error para user no encontrado
    */

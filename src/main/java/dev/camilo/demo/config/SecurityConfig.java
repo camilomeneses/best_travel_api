@@ -77,11 +77,21 @@ public class SecurityConfig {
         .build();
   }
 
+  /**
+   *Metodo para manejar el autenticationManager
+   * @return
+   * @throws Exception
+   */
   @Bean
   AuthenticationManager authenticationManager() throws Exception{
     return authenticationConfiguration.getAuthenticationManager();
   }
 
+  /**
+   * Metodo para poder escuchar los eventos que estan en el proceso de logeo
+   * @param applicationEventPublisher ApplicationEventPublisher
+   * @return AuthenticationEventPublisher
+   */
   @Bean
   public AuthenticationEventPublisher authenticationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
     return new DefaultAuthenticationEventPublisher(applicationEventPublisher);
