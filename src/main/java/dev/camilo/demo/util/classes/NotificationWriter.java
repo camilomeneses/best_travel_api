@@ -1,4 +1,4 @@
-package dev.camilo.demo.util.methods;
+package dev.camilo.demo.util.classes;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

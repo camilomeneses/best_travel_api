@@ -14,7 +14,7 @@ import dev.camilo.demo.infraestructure.helpers.CurrencyHelper;
 import dev.camilo.demo.infraestructure.helpers.CustomerHelper;
 import dev.camilo.demo.infraestructure.helpers.EmailHelper;
 import dev.camilo.demo.util.annotations.BlackListCheck;
-import dev.camilo.demo.util.methods.GenerateRandomTime;
+import dev.camilo.demo.util.classes.GenerateRandomTime;
 import dev.camilo.demo.util.enums.Tables;
 import dev.camilo.demo.util.exceptions.IdNotFoundException;
 import lombok.RequiredArgsConstructor;

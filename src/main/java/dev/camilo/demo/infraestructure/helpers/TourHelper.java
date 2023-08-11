@@ -5,7 +5,7 @@ import dev.camilo.demo.domain.repositories.jpa.ReservationRepository;
 import dev.camilo.demo.domain.repositories.jpa.TicketRepository;
 import dev.camilo.demo.infraestructure.services.ReservationService;
 import dev.camilo.demo.infraestructure.services.TicketService;
-import dev.camilo.demo.util.methods.GenerateRandomTime;
+import dev.camilo.demo.util.classes.GenerateRandomTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

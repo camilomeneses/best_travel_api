@@ -1,4 +1,4 @@
-package dev.camilo.demo.util.methods;
+package dev.camilo.demo.util.classes;
 
 import com.nimbusds.jose.jwk.RSAKey;
 import java.security.KeyPair;

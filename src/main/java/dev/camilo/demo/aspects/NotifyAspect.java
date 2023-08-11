@@ -1,7 +1,7 @@
 package dev.camilo.demo.aspects;
 
 import dev.camilo.demo.util.annotations.Notify;
-import dev.camilo.demo.util.methods.NotificationWriter;
+import dev.camilo.demo.util.classes.NotificationWriter;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
